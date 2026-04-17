@@ -1,0 +1,475 @@
+[
+  {
+    "id": "1",
+    "slug": "elektromobil",
+    "name": "Elektromobil",
+    "category": "E-Mobil",
+    "tagline": "Komfortabel und barrierefrei unterwegs",
+    "tagline_en": "Comfortable, accessible mobility for everyone",
+    "description": "Das Elektromobil ist ideal für alle, die komfortabel und ohne körperliche Anstrengung unterwegs sein möchten. Mit elektrischem Antrieb, stabiler Bauweise und einfacher Bedienung ist es perfekt für Senioren, Menschen mit eingeschränkter Mobilität oder alle, die einfach entspannt fahren möchten.",
+    "description_en": "The Elektromobil is ideal for those who want to get around comfortably without physical exertion. With electric drive, a stable frame, and easy controls, it is perfect for seniors, people with limited mobility, or anyone who simply wants a relaxed ride.",
+    "image": "/bikes/Elektromobil.png",
+    "images": [
+      "/bikes/Elektromobil.png"
+    ],
+    "specs": {
+      "frame": "Step-through",
+      "gears": "Elektrisch",
+      "wheels": "20 Zoll",
+      "weight": "25 kg",
+      "suitableFor": "Senioren, eingeschränkte Mobilität"
+    },
+    "included": [
+      "Helm",
+      "Schloss",
+      "Ladekabel"
+    ],
+    "pricing": {
+      "fullDay": 50,
+      "threeDays": 130,
+      "week": 250
+    },
+    "rating": 4.9,
+    "reviews": 14,
+    "popular": false,
+    "badge": "",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "2",
+    "slug": "ebike-premium",
+    "name": "E-Bike Premium",
+    "category": "E-Bike",
+    "tagline": "Höchste Qualität mit Bosch-Motor und langer Reichweite",
+    "tagline_en": "Top quality with Bosch motor and long range",
+    "description": "Das E-Bike Premium ist unser hochwertigstes Elektrorad. Mit Bosch Performance Line Motor, integriertem Akku und bis zu 120 km Reichweite ist es ideal für längere Touren, anspruchsvolles Terrain und ambitionierte Fahrer. Modernste Technik trifft auf maximalen Komfort.",
+    "description_en": "The E-Bike Premium is our highest-quality electric bike. With a Bosch Performance Line motor, integrated battery, and up to 120 km range, it is ideal for longer tours, challenging terrain, and ambitious riders. State-of-the-art technology meets maximum comfort.",
+    "image": "/bikes/E-Bike-Premium.jpg",
+    "images": [
+      "/bikes/E-Bike-Premium.jpg"
+    ],
+    "specs": {
+      "frame": "48cm / 52cm / 56cm",
+      "gears": "10-Gang Shimano",
+      "wheels": "28 Zoll",
+      "weight": "24 kg",
+      "suitableFor": "Touren, Alltag, Hügel"
+    },
+    "included": [
+      "Helm",
+      "Schloss",
+      "Ladekabel",
+      "Satteltasche",
+      "Reparaturset"
+    ],
+    "pricing": {
+      "fullDay": 65,
+      "threeDays": 170,
+      "week": 320
+    },
+    "rating": 5,
+    "reviews": 41,
+    "popular": true,
+    "badge": "Premium",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "3",
+    "slug": "ebike-city",
+    "name": "E-Bike City",
+    "category": "E-Bike",
+    "tagline": "Elektrisch durch die Stadt — einfach und effizient",
+    "tagline_en": "Electric city riding — simple and efficient",
+    "description": "Das E-Bike City ist perfekt für den städtischen Alltag. Mit zuverlässigem Mittelmotor, komfortabler Sitzposition und bis zu 80 km Reichweite kommst du entspannt überall hin — ohne Schweiß, ohne Stress. Ideal für Stadttouren, Besichtigungen und den Weg zur Arbeit.",
+    "description_en": "The E-Bike City is perfect for everyday urban use. With a reliable mid-motor, comfortable riding position, and up to 80 km range, you get everywhere relaxed — no sweat, no stress. Ideal for city tours, sightseeing, and commuting.",
+    "image": "/bikes/E-Bike-City.png",
+    "images": [
+      "/bikes/E-Bike-City.png"
+    ],
+    "specs": {
+      "frame": "44cm / 48cm / 52cm",
+      "gears": "7-Gang Shimano",
+      "wheels": "28 Zoll",
+      "weight": "22 kg",
+      "suitableFor": "Stadt, Alltag, Touren"
+    },
+    "included": [
+      "Helm",
+      "Schloss",
+      "Ladekabel",
+      "Korb"
+    ],
+    "pricing": {
+      "fullDay": 52,
+      "threeDays": 135,
+      "week": 260
+    },
+    "rating": 4.8,
+    "reviews": 56,
+    "popular": true,
+    "badge": "Beliebt",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "4",
+    "slug": "city-bike",
+    "name": "City-Bike",
+    "category": "City Bike",
+    "tagline": "Der Klassiker für entspannte Stadtfahrten",
+    "tagline_en": "The classic for relaxed city rides",
+    "description": "Das City-Bike ist unser Allrounder für die Stadt. Mit aufrechter Sitzposition, 7-Gang-Schaltung und komfortabler Ausstattung ist es ideal für Sightseeing, Ausflüge und entspannte Fahrten durch die Stadt. Leicht zu fahren, auch für gelegentliche Radfahrer.",
+    "description_en": "The City-Bike is our all-rounder for urban use. With an upright riding position, 7-speed gearing, and comfortable equipment, it is ideal for sightseeing, day trips, and relaxed city rides. Easy to ride, even for occasional cyclists.",
+    "image": "/bikes/City-Bike.jpg",
+    "images": [
+      "/bikes/City-Bike.jpg"
+    ],
+    "specs": {
+      "frame": "45cm / 50cm / 55cm",
+      "gears": "7-Gang Shimano",
+      "wheels": "28 Zoll",
+      "weight": "13 kg",
+      "suitableFor": "Stadt, Alltag, Tourismus"
+    },
+    "included": [
+      "Helm",
+      "Schloss",
+      "Korb",
+      "Reparaturset",
+      "Stadtplan"
+    ],
+    "pricing": {
+      "fullDay": 25,
+      "threeDays": 65,
+      "week": 120
+    },
+    "rating": 4.9,
+    "reviews": 78,
+    "popular": true,
+    "badge": "Am beliebtesten",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "5",
+    "slug": "kinderrad-24",
+    "name": "Kinderrad 24\"",
+    "category": "Kinderrad",
+    "tagline": "Für Kinder von ca. 10–13 Jahren",
+    "tagline_en": "For children approx. 10–13 years",
+    "description": "Das Kinderrad 24 ist perfekt für ältere Kinder, die schon sicher Radfahren können. Mit 24-Zoll-Rädern, 6-Gang-Schaltung und zuverlässigen Bremsen bietet es Sicherheit und Fahrspaß für Kinder ab etwa 10 Jahren.",
+    "description_en": "The Kinderrad 24 is perfect for older children who can already ride confidently. With 24-inch wheels, 6-speed gearing, and reliable brakes, it offers safety and riding fun for children from about 10 years.",
+    "image": "/bikes/Kinderrad-24.png",
+    "images": [
+      "/bikes/Kinderrad-24.png"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "6-Gang",
+      "wheels": "24 Zoll",
+      "weight": "11 kg",
+      "suitableFor": "Kinder ca. 10–13 Jahre"
+    },
+    "included": [
+      "Helm",
+      "Schloss"
+    ],
+    "pricing": {
+      "fullDay": 16,
+      "threeDays": 42,
+      "week": 78
+    },
+    "rating": 4.8,
+    "reviews": 22,
+    "popular": false,
+    "badge": "Familie",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "6",
+    "slug": "kinderrad-18",
+    "name": "Kinderrad 18\"",
+    "category": "Kinderrad",
+    "tagline": "Für die Kleinen — sicher und leicht",
+    "tagline_en": "For the little ones — safe and lightweight",
+    "description": "Das Kinderrad 18 ist ideal für kleinere Kinder, die gerade erst mit dem Radfahren beginnen. Mit 18-Zoll-Rädern, einfacher Bedienung und einem leichten Rahmen ist es perfekt für Kinder von etwa 5–7 Jahren.",
+    "description_en": "The Kinderrad 18 is ideal for smaller children just starting to ride. With 18-inch wheels, simple controls, and a light frame, it is perfect for children of about 5–7 years.",
+    "image": "/bikes/Kinderrad-18.png",
+    "images": [
+      "/bikes/Kinderrad-18.png"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "1-Gang",
+      "wheels": "18 Zoll",
+      "weight": "8 kg",
+      "suitableFor": "Kinder ca. 5–7 Jahre"
+    },
+    "included": [
+      "Helm",
+      "Schloss"
+    ],
+    "pricing": {
+      "fullDay": 13,
+      "threeDays": 34,
+      "week": 65
+    },
+    "rating": 4.7,
+    "reviews": 15,
+    "popular": false,
+    "badge": "",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "7",
+    "slug": "kinderrad-20",
+    "name": "Kinderrad 20\"",
+    "category": "Kinderrad",
+    "tagline": "Perfekt für Kinder von ca. 6–9 Jahren",
+    "tagline_en": "Perfect for children approx. 6–9 years",
+    "description": "Das Kinderrad 20 ist unser vielseitigstes Kinderfahrrad. Mit 20-Zoll-Rädern, 6-Gang-Schaltung und robuster Bauweise ist es ideal für Kinder von etwa 6–9 Jahren — für Stadtfahrten, Parks und kleine Ausflüge.",
+    "description_en": "The Kinderrad 20 is our most versatile children's bike. With 20-inch wheels, 6-speed gearing, and a robust frame, it is ideal for children of about 6–9 years — for city rides, parks, and short trips.",
+    "image": "/bikes/Kinderrad-20.png",
+    "images": [
+      "/bikes/Kinderrad-20.png"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "6-Gang",
+      "wheels": "20 Zoll",
+      "weight": "9 kg",
+      "suitableFor": "Kinder ca. 6–9 Jahre"
+    },
+    "included": [
+      "Helm",
+      "Schloss"
+    ],
+    "pricing": {
+      "fullDay": 15,
+      "threeDays": 38,
+      "week": 72
+    },
+    "rating": 4.8,
+    "reviews": 31,
+    "popular": false,
+    "badge": "Familie",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "8",
+    "slug": "kinderrad-26",
+    "name": "Kinderrad 26\"",
+    "category": "Kinderrad",
+    "tagline": "Für Jugendliche — zwischen Kind und Erwachsenen",
+    "tagline_en": "For teenagers — between child and adult",
+    "description": "Das Kinderrad 26 ist ideal für ältere Kinder und Jugendliche. Mit 26-Zoll-Rädern und 21-Gang-Schaltung bietet es Komfort und Kontrolle für Fahrten in der Stadt und auf längeren Strecken.",
+    "description_en": "The Kinderrad 26 is ideal for older children and teenagers. With 26-inch wheels and 21-speed gearing, it offers comfort and control for city rides and longer routes.",
+    "image": "/bikes/Kinderrad-26.png",
+    "images": [
+      "/bikes/Kinderrad-26.png"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "21-Gang Shimano",
+      "wheels": "26 Zoll",
+      "weight": "12 kg",
+      "suitableFor": "Kinder/Jugendliche ca. 12–15 Jahre"
+    },
+    "included": [
+      "Helm",
+      "Schloss"
+    ],
+    "pricing": {
+      "fullDay": 19,
+      "threeDays": 50,
+      "week": 95
+    },
+    "rating": 4.7,
+    "reviews": 18,
+    "popular": false,
+    "badge": "",
+    "lastServiced": "Februar 2026"
+  },
+  {
+    "id": "9",
+    "slug": "staycool-bike-elektrisch",
+    "name": "Staycool Bike — Elektrisch",
+    "category": "E-Bike",
+    "tagline": "Stilvolles Elektrorad mit entspanntem Fahrgefühl",
+    "tagline_en": "Stylish electric bike with a relaxed riding feel",
+    "description": "Das Staycool Bike — Elektrisch verbindet modernes Design mit elektrischem Fahrspaß. Mit aufrechter Sitzposition, tiefem Einstieg und sanfter elektrischer Unterstützung ist es perfekt für alle, die stilvoll und entspannt unterwegs sein möchten.",
+    "description_en": "The Staycool Bike — Elektrisch combines modern design with electric riding pleasure. With an upright riding position, low step-through frame, and gentle electric assist, it is perfect for those who want to ride in style and comfort.",
+    "image": "/bikes/Staycool-Elektrisch.png",
+    "images": [
+      "/bikes/Staycool-Elektrisch.png"
+    ],
+    "specs": {
+      "frame": "Tiefeinsteiger / Step-through",
+      "gears": "7-Gang Shimano",
+      "wheels": "26 Zoll",
+      "weight": "21 kg",
+      "suitableFor": "Stadt, Alltag, Entspannung"
+    },
+    "included": [
+      "Helm",
+      "Schloss",
+      "Ladekabel",
+      "Korb"
+    ],
+    "pricing": {
+      "fullDay": 55,
+      "threeDays": 145,
+      "week": 270
+    },
+    "rating": 4.9,
+    "reviews": 29,
+    "popular": false,
+    "badge": "Neuheit",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "10",
+    "slug": "kinderanhanger-buggy",
+    "name": "Kinderanhänger & Buggy",
+    "category": "Anhänger",
+    "tagline": "Für Kinder bis ca. 4 Jahre — als Anhänger oder Buggy",
+    "tagline_en": "For children up to approx. 4 years — as trailer or buggy",
+    "description": "Der Kinderanhänger & Buggy ist die perfekte Lösung für Familien mit Kleinkindern. Er lässt sich schnell an jedes Fahrrad ankoppeln und bietet Platz für bis zu 2 Kinder. Wahlweise als Buggy verwendbar — ideal für Ausflüge mit den Kleinsten.",
+    "description_en": "The Kinderanhänger & Buggy is the perfect solution for families with young children. It attaches quickly to any bike and has space for up to 2 children. Can also be used as a buggy — ideal for outings with the littlest ones.",
+    "image": "/bikes/Kinderanha-Buggy.jpg",
+    "images": [
+      "/bikes/Kinderanha-Buggy.jpg"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "—",
+      "wheels": "20 Zoll (Anhänger)",
+      "weight": "12 kg",
+      "suitableFor": "Kinder bis ca. 4 Jahre / max. 40 kg"
+    },
+    "included": [
+      "Kinderhelme",
+      "Regenschutz",
+      "Sicherheitsgurt",
+      "Anhängerkupplung"
+    ],
+    "pricing": {
+      "fullDay": 25,
+      "threeDays": 65,
+      "week": 120
+    },
+    "rating": 4.8,
+    "reviews": 24,
+    "popular": false,
+    "badge": "Familie",
+    "lastServiced": "März 2026"
+  },
+  {
+    "id": "11",
+    "slug": "hundeanhanger-l",
+    "name": "Hundeanhänger L",
+    "category": "Anhänger",
+    "tagline": "Großer Anhänger für Hunde bis ca. 40 kg",
+    "tagline_en": "Large trailer for dogs up to approx. 40 kg",
+    "description": "Der Hundeanhänger L bietet großen Hunden viel Platz und Komfort. Mit robusten Rädern, sicherem Sicherheitsnetz und bequemem Boden ist er ideal für entspannte Ausflüge mit dem Hund. Für Hunde bis ca. 40 kg geeignet.",
+    "description_en": "The Hundeanhänger L offers large dogs plenty of space and comfort. With sturdy wheels, a secure safety net, and a comfortable base, it is ideal for relaxed outings with your dog. Suitable for dogs up to approx. 40 kg.",
+    "image": "/bikes/Hundeanh-L.webp",
+    "images": [
+      "/bikes/Hundeanh-L.webp"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "—",
+      "wheels": "20 Zoll",
+      "weight": "11 kg",
+      "suitableFor": "Hunde bis ca. 40 kg"
+    },
+    "included": [
+      "Sicherheitsnetz",
+      "Anhängerkupplung",
+      "Bodenmatte"
+    ],
+    "pricing": {
+      "fullDay": 25,
+      "threeDays": 65,
+      "week": 120
+    },
+    "rating": 4.7,
+    "reviews": 11,
+    "popular": false,
+    "badge": "",
+    "lastServiced": "Februar 2026"
+  },
+  {
+    "id": "12",
+    "slug": "hundeanhanger-s",
+    "name": "Hundeanhänger S",
+    "category": "Anhänger",
+    "tagline": "Kompakter Anhänger für kleinere Hunde",
+    "tagline_en": "Compact trailer for smaller dogs",
+    "description": "Der Hundeanhänger S ist der ideale Begleiter für kleinere Hunde. Kompakt, leicht und sicher — perfekt für entspannte Fahrradtouren mit deinem Vierbeiner. Für Hunde bis ca. 15 kg geeignet.",
+    "description_en": "The Hundeanhänger S is the ideal companion for smaller dogs. Compact, lightweight, and safe — perfect for relaxed cycling tours with your four-legged friend. Suitable for dogs up to approx. 15 kg.",
+    "image": "/bikes/Hundeanh-S.webp",
+    "images": [
+      "/bikes/Hundeanh-S.webp"
+    ],
+    "specs": {
+      "frame": "Einheitsgröße",
+      "gears": "—",
+      "wheels": "16 Zoll",
+      "weight": "8 kg",
+      "suitableFor": "Hunde bis ca. 15 kg"
+    },
+    "included": [
+      "Sicherheitsnetz",
+      "Anhängerkupplung",
+      "Bodenmatte"
+    ],
+    "pricing": {
+      "fullDay": 20,
+      "threeDays": 52,
+      "week": 98
+    },
+    "rating": 4.8,
+    "reviews": 9,
+    "popular": false,
+    "badge": "",
+    "lastServiced": "Februar 2026"
+  },
+  {
+    "id": "13",
+    "slug": "e-lastenrad-chike",
+    "name": "E-Lastenrad CHIKE",
+    "category": "E-Lastenrad",
+    "tagline": "Das elektrische Familien-Lastenrad — Made in Germany",
+    "tagline_en": "The electric family cargo bike — Made in Germany",
+    "description": "Das E-Lastenrad CHIKE ist das ultimative Familien- und Transportrad. Der CHIKE ist ein hochwertiges deutsches Lastenrad mit elektrischer Unterstützung, das bis zu 2 Kinder in der Frontbox oder 100 kg Ladung transportieren kann. Perfekt für Familienausflüge und größere Einkäufe.",
+    "description_en": "The E-Lastenrad CHIKE is the ultimate family and cargo bike. The CHIKE is a high-quality German cargo bike with electric assist that can carry up to 2 children in the front box or 100 kg of cargo. Perfect for family outings and larger shopping trips.",
+    "image": "/bikes/E-Lastenrad-CHIKE.jpg",
+    "images": [
+      "/bikes/E-Lastenrad-CHIKE.jpg"
+    ],
+    "specs": {
+      "frame": "Lastenrad / Tiefeinsteiger",
+      "gears": "8-Gang Shimano",
+      "wheels": "26/20 Zoll",
+      "weight": "38 kg",
+      "suitableFor": "Familien, Transport, Stadt"
+    },
+    "included": [
+      "Helm (Erwachsene)",
+      "2x Kinderhelm",
+      "Schloss",
+      "Regenverdeck",
+      "Ladekabel"
+    ],
+    "pricing": {
+      "fullDay": 75,
+      "threeDays": 195,
+      "week": 370
+    },
+    "rating": 4.9,
+    "reviews": 33,
+    "popular": true,
+    "badge": "Familie & Cargo",
+    "lastServiced": "März 2026"
+  }
+]

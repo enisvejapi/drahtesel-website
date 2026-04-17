@@ -1,0 +1,32 @@
+[
+  {
+    "id": "f1",
+    "question": "What's included with every rental?",
+    "answer": "Every rental includes a helmet, a quality lock, and a repair kit. Depending on the bike, you may also get a basket, saddlebag, city map, or child helmets. Check the individual bike page for what's included."
+  },
+  {
+    "id": "f2",
+    "question": "Can I cancel my booking?",
+    "answer": "Yes. You can cancel free of charge up to 24 hours before your scheduled pickup. Cancellations made less than 24 hours before are non-refundable. See our full cancellation policy in the FAQ page."
+  },
+  {
+    "id": "f3",
+    "question": "Is there a deposit required?",
+    "answer": "A deposit may be required at pickup depending on the bike type. For standard city bikes, no deposit is required. For e-bikes and cargo bikes, a refundable deposit of €50–€100 applies."
+  },
+  {
+    "id": "f4",
+    "question": "What happens if I return late?",
+    "answer": "If you're running late, please call or message us as soon as possible. Late returns are charged at a prorated hourly rate. We are flexible — just communicate with us in advance."
+  },
+  {
+    "id": "f5",
+    "question": "Do I need to bring ID?",
+    "answer": "Yes, please bring a valid government-issued ID or passport at pickup. This is required for all rentals."
+  },
+  {
+    "id": "f6",
+    "question": "What if the bike breaks down?",
+    "answer": "In the unlikely event of a mechanical issue, call our support line. We will do our best to assist you or arrange a replacement. All our bikes are professionally maintained before each rental."
+  }
+]

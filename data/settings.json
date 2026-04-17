@@ -1,0 +1,26 @@
+{
+  "passwordHash": null,
+  "mietrad": {
+    "baseUrl": "",
+    "apiKey": "",
+    "stationId": "",
+    "endpoints": {
+      "availability": "/api/v1/availability",
+      "bookings": "/api/v1/bookings",
+      "products": "/api/v1/products"
+    },
+    "categoryMap": {
+      "stadtrad": "City Bike",
+      "city": "City Bike",
+      "ebike": "E-Bike",
+      "e-bike": "E-Bike",
+      "lastenrad": "Cargo",
+      "cargo": "Cargo",
+      "mountainbike": "Mountain Bike",
+      "mountain": "Mountain Bike",
+      "kinderrad": "Kids",
+      "kids": "Kids",
+      "trekking": "Trekking"
+    }
+  }
+}

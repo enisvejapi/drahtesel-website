@@ -1,0 +1,46 @@
+[
+  {
+    "id": "leuchtturm-tour",
+    "name": { "de": "Leuchtturm-Tour", "en": "Lighthouse Tour" },
+    "description": { "de": "Vom Zentrum zum historischen Leuchtturm — ein Klassiker auf Norderney.", "en": "From the centre to the historic lighthouse — a Norderney classic." },
+    "distance": "~6 km",
+    "duration": "~25 min",
+    "difficulty": "easy",
+    "emoji": "🏮",
+    "start": [53.7075, 7.1453],
+    "end": [53.7165, 7.2180]
+  },
+  {
+    "id": "nordstrand-tour",
+    "name": { "de": "Nordstrand-Tour", "en": "North Beach Tour" },
+    "description": { "de": "Entlang der Nordseeküste — Wind im Gesicht, Meer in Sichtweite.", "en": "Along the North Sea coast — wind in your face, sea in sight." },
+    "distance": "~10 km",
+    "duration": "~40 min",
+    "difficulty": "easy",
+    "emoji": "🏖️",
+    "start": [53.7075, 7.1453],
+    "end": [53.7230, 7.2450]
+  },
+  {
+    "id": "insel-ost-tour",
+    "name": { "de": "Insel-Ost-Tour", "en": "Island East Tour" },
+    "description": { "de": "In den ruhigen Ostteil der Insel — Natur pur und weite Dünenlandschaft.", "en": "Into the quiet east of the island — pure nature and wide dune landscapes." },
+    "distance": "~14 km",
+    "duration": "~55 min",
+    "difficulty": "medium",
+    "emoji": "🌿",
+    "start": [53.7075, 7.1453],
+    "end": [53.7070, 7.2650]
+  },
+  {
+    "id": "familien-tour",
+    "name": { "de": "Familien-Tour", "en": "Family Tour" },
+    "description": { "de": "Entspannt und flach — perfekt für Kinder und gemütliche Radler.", "en": "Relaxed and flat — perfect for kids and casual cyclists." },
+    "distance": "~4 km",
+    "duration": "~15 min",
+    "difficulty": "easy",
+    "emoji": "👨‍👩‍👧",
+    "start": [53.7075, 7.1453],
+    "end": [53.7190, 7.1280]
+  }
+]

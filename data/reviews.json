@@ -1,0 +1,26 @@
+[
+  {
+    "id": "r1",
+    "name": "Sarah M.",
+    "date": "March 2026",
+    "rating": 5,
+    "text": "Absolutely brilliant! The bikes were in perfect condition, pickup was super easy, and the staff were incredibly helpful. We explored the whole city in one day. Will definitely book again!",
+    "source": "Google"
+  },
+  {
+    "id": "r2",
+    "name": "Thomas K.",
+    "date": "February 2026",
+    "rating": 5,
+    "text": "Rented the e-bike for a full day and it was the best decision. The range was excellent — we covered 60+ km without any issues. The booking process was straightforward and the bike was ready when we arrived.",
+    "source": "Google"
+  },
+  {
+    "id": "r3",
+    "name": "Familie Bauer",
+    "date": "February 2026",
+    "rating": 5,
+    "text": "Took the cargo bike with our two kids. Everything was perfectly prepared — helmets for the children, rain cover, clear instructions. The kids loved it. Great local business!",
+    "source": "Google"
+  }
+]
