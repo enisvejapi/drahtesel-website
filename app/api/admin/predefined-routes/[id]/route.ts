@@ -11,11 +11,12 @@ function write(data: unknown) {
   writeFileSync(FILE, JSON.stringify(data, null, 2))
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const body = await req.json()
     const routes = read()
-    const idx = routes.findIndex((r: { id: string }) => r.id === params.id)
+    const idx = routes.findIndex((r: { id: string }) => r.id === id)
     if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
     routes[idx] = {
@@ -36,10 +37,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const routes = read()
-    const filtered = routes.filter((r: { id: string }) => r.id !== params.id)
+    const filtered = routes.filter((r: { id: string }) => r.id !== id)
     write(filtered)
     return NextResponse.json({ ok: true })
   } catch {
