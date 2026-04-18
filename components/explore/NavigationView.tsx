@@ -176,7 +176,7 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
       <div className="flex-1" />
 
       {/* ── BOTTOM: Progress bar + destination ───────────────────────────── */}
-      <div className="pointer-events-auto px-3 pb-24 md:pb-4">
+      <div className="pointer-events-auto px-3 nav-bottom-bar">
         <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
           {/* Progress bar */}
           <div className="h-1.5 bg-gray-100">
@@ -189,13 +189,13 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
           <div className="px-4 py-3 flex items-center gap-3">
             {/* Destination info */}
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 nav-dest-icon"
               style={{ backgroundColor: `${cat.color}18` }}
             >
               {isLast ? '🏁' : cat.emoji}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[11px] text-gray-500 font-semibold">
+              <div className="text-[11px] text-gray-500 font-semibold nav-dest-label">
                 {de ? 'Ziel' : 'Destination'}
               </div>
               <div className="text-[14px] font-extrabold text-gray-900 truncate">
@@ -214,6 +214,17 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
         </div>
       </div>
 
+      <style>{`
+        .nav-bottom-bar {
+          padding-bottom: max(16px, env(safe-area-inset-bottom));
+        }
+        /* Landscape: hide destination label, shrink icon */
+        @media (orientation: landscape) and (max-height: 500px) {
+          .nav-bottom-bar { padding-bottom: max(6px, env(safe-area-inset-bottom)); }
+          .nav-dest-icon  { width: 32px !important; height: 32px !important; font-size: 14px !important; }
+          .nav-dest-label { display: none; }
+        }
+      `}</style>
     </div>
   )
 }

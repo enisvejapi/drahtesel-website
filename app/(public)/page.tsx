@@ -1,4 +1,5 @@
 import Hero from '@/components/sections/Hero'
+import FeatureShowcase from '@/components/sections/FeatureShowcase'
 import QuickBook from '@/components/sections/QuickBook'
 import Categories from '@/components/sections/Categories'
 import HowItWorks from '@/components/sections/HowItWorks'
@@ -16,6 +17,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <FeatureShowcase />
       <QuickBook />
       <Categories />
       <HowItWorks />

@@ -90,8 +90,8 @@ export default function PinDialog({ locale, onSuccess, onValidate }: Props) {
           </h2>
           <p className="text-white/60 text-xs mt-1 leading-relaxed">
             {de
-              ? 'Für Ihre Sicherheit und einen reibungslosen Start: Bitte fragen Sie Ihre Kolleg:innen nach dem aktuellen Zugangscode'
-              : 'For your safety and a smooth start: Please ask your colleagues for the current access code'}
+              ? 'Für Ihre Sicherheit und einen reibungslosen Start: Bitte fragen Sie unser Team nach dem aktuellen Zugangscode'
+              : 'For your safety and a smooth start: Please ask our team for the current access code'}
           </p>
         </div>
 

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, Suspense, Component } from 'react'
 import type { ReactNode } from 'react'
 import dynamic from 'next/dynamic'
-import { Map, X, Route, ChevronRight, Bike, Clock } from 'lucide-react'
+import { Map, X, Route, ChevronRight, Bike, Clock, Maximize2, Minimize2 } from 'lucide-react'
 import { useLocale } from '@/components/LocaleProvider'
 import { DEFAULT_PINS } from '@/lib/interest-pins'
 import type { InterestPin } from '@/lib/interest-pins'
@@ -152,6 +152,30 @@ function ExploreApp() {
   const [showNavSplash, setShowNavSplash] = useState(false)
   const [showPinDialog, setShowPinDialog] = useState(false)
   const [weeklyPins, setWeeklyPins] = useState<WeeklyPin[]>([])
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showIosHint, setShowIosHint] = useState(false)
+
+  // Detect iOS (no Fullscreen API support)
+  const isIOS = typeof navigator !== 'undefined' && /iP(hone|ad|od)/.test(navigator.userAgent)
+
+  // Track fullscreen state
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', handler)
+    return () => document.removeEventListener('fullscreenchange', handler)
+  }, [])
+
+  const toggleFullscreen = useCallback(() => {
+    if (isIOS) {
+      setShowIosHint(h => !h)
+      return
+    }
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {})
+    } else {
+      document.exitFullscreen?.().catch(() => {})
+    }
+  }, [isIOS])
 
   // ── Route planner ──────────────────────────────────────────────────────────
   type PlannerMode = 'idle' | 'placing-start' | 'placing-end' | 'routing'
@@ -422,6 +446,34 @@ function ExploreApp() {
             </button>
           </div>
 
+          {/* Fullscreen button */}
+          <div className="pointer-events-auto relative">
+            <button
+              onClick={toggleFullscreen}
+              className="h-10 w-10 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center justify-center text-brand-gray hover:text-brand-black transition-colors"
+              title={isFullscreen ? (de ? 'Vollbild beenden' : 'Exit fullscreen') : (de ? 'Vollbild' : 'Fullscreen')}
+            >
+              {isFullscreen
+                ? <Minimize2 size={16} />
+                : <Maximize2 size={16} />
+              }
+            </button>
+            {/* iOS hint tooltip */}
+            {showIosHint && (
+              <div
+                className="absolute top-12 right-0 z-[1200] bg-brand-black text-white text-[12px] font-semibold px-4 py-3 rounded-2xl shadow-2xl w-64 leading-snug"
+                onClick={() => setShowIosHint(false)}
+              >
+                <div className="font-extrabold mb-1">{de ? 'Vollbild auf iPhone' : 'Fullscreen on iPhone'}</div>
+                {de
+                  ? 'Tippe unten auf Teilen → „Zum Home-Bildschirm" → App starten'
+                  : 'Tap Share below → "Add to Home Screen" → launch the app'
+                }
+                <div className="text-white/40 text-[10px] mt-2">{de ? 'Zum Schließen tippen' : 'Tap to dismiss'}</div>
+              </div>
+            )}
+          </div>
+
           {/* Start location indicator */}
           {startLocation ? (
             <div className="pointer-events-auto">
@@ -555,7 +607,7 @@ function ExploreApp() {
       {showRoutePanel && (
         <div className="absolute inset-0 z-[1200] flex flex-col justify-end" onClick={() => setShowRoutePanel(false)}>
           <div
-            className="bg-white rounded-t-3xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto"
+            className="bg-white rounded-t-3xl shadow-2xl overflow-hidden max-h-[80vh] landscape:max-h-[92vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
           >
             {/* Handle */}

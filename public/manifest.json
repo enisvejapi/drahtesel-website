@@ -1,0 +1,13 @@
+{
+  "name": "Drahtesel Norderney",
+  "short_name": "Drahtesel",
+  "description": "Fahrradverleih & Touren — Norderney",
+  "start_url": "/tours",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#C8102E",
+  "orientation": "any",
+  "icons": [
+    { "src": "/logo.jpg", "sizes": "any", "type": "image/jpeg", "purpose": "any maskable" }
+  ]
+}
