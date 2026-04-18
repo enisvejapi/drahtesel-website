@@ -426,7 +426,8 @@ function ExploreApp() {
             </Link>
           </div>
 
-          <div className="pointer-events-auto flex-1">
+          {/* Title — hidden on small phones to keep all buttons visible */}
+          <div className="pointer-events-auto flex-1 hidden sm:block">
             <div className="bg-white/95 backdrop-blur rounded-xl shadow-md px-3.5 py-2.5 flex items-center gap-2.5">
               <Map size={15} className="text-brand-red flex-shrink-0" />
               <span className="text-[13px] font-extrabold text-brand-black truncate">
@@ -435,14 +436,16 @@ function ExploreApp() {
             </div>
           </div>
 
+          {/* Spacer on mobile only */}
+          <div className="flex-1 sm:hidden pointer-events-none" />
+
           {/* Route planner button */}
           <div className="pointer-events-auto">
             <button
               onClick={() => setShowRoutePanel(true)}
-              className="h-10 px-3 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center gap-1.5 text-[12px] font-bold text-brand-gray hover:text-brand-black transition-colors"
+              className="h-10 w-10 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center justify-center text-brand-gray hover:text-brand-black transition-colors"
             >
               <Route size={15} className="text-brand-red" />
-              <span className="hidden sm:inline">{de ? 'Route' : 'Route'}</span>
             </button>
           </div>
 
@@ -479,10 +482,10 @@ function ExploreApp() {
             <div className="pointer-events-auto">
               <button
                 onClick={() => setShowModal(true)}
-                className="h-10 px-3 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center gap-1.5 text-[12px] font-bold text-brand-gray hover:text-brand-black transition-colors max-w-[120px]"
+                className="h-10 px-3 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center gap-1.5 text-[12px] font-bold text-brand-gray hover:text-brand-black transition-colors"
               >
                 <span>🏨</span>
-                <span className="truncate">{startLocation.label}</span>
+                <span className="hidden sm:inline truncate max-w-[90px]">{startLocation.label}</span>
               </button>
             </div>
           ) : (
@@ -491,7 +494,7 @@ function ExploreApp() {
                 onClick={() => setShowModal(true)}
                 className="h-10 px-3 bg-brand-red text-white rounded-xl shadow-md flex items-center gap-1.5 text-[12px] font-bold transition-colors"
               >
-                📍 {de ? 'Standort' : 'Location'}
+                📍<span className="hidden sm:inline"> {de ? 'Standort' : 'Location'}</span>
               </button>
             </div>
           )}
