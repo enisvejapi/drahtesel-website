@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { InterestPin } from '@/lib/interest-pins'
 
 interface Props {
@@ -23,13 +23,16 @@ export default function NavStartSplash({ pin, totalDistance, locale, onDone }: P
   const de = locale === 'de'
   // 0 = mounting  1 = active  2 = exiting
   const [phase, setPhase] = useState(0)
+  // Use a ref so the timer is never reset by parent re-renders (e.g. GPS updates)
+  const onDoneRef = useRef(onDone)
+  useEffect(() => { onDoneRef.current = onDone }, [onDone])
 
   useEffect(() => {
     const t0 = setTimeout(() => setPhase(1), 30)
     const t1 = setTimeout(() => setPhase(2), 2100)
-    const t2 = setTimeout(onDone, 2750)
+    const t2 = setTimeout(() => onDoneRef.current(), 2750)
     return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2) }
-  }, [onDone])
+  }, []) // empty — runs once on mount only
 
   const active  = phase === 1
   const exiting = phase === 2

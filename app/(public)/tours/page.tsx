@@ -144,6 +144,15 @@ function ExploreApp() {
   const { locale } = useLocale()
   const de = locale === 'de'
 
+  // Lock body scroll and set black background for full-screen map experience
+  useEffect(() => {
+    const prev = document.body.style.cssText
+    document.body.style.overflow = 'hidden'
+    document.body.style.background = '#0a0a0a'
+    document.body.style.overscrollBehavior = 'none'
+    return () => { document.body.style.cssText = prev }
+  }, [])
+
   const [showModal, setShowModal] = useState(true)
   const [startLocation, setStartLocation] = useState<StartLocation | null>(null)
   const [pins, setPins] = useState<InterestPin[]>(DEFAULT_PINS)
@@ -415,7 +424,7 @@ function ExploreApp() {
   return (
     <div
       className="relative w-full overflow-hidden"
-      style={{ height: '100dvh' }}
+      style={{ height: '100dvh', background: '#0a0a0a', overscrollBehavior: 'none' }}
     >
       {/* Map */}
       <ExploreMap
