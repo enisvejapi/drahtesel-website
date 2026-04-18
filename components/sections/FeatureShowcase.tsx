@@ -287,7 +287,7 @@ export default function FeatureShowcase() {
         ? 'Gib einfach deine Fahrradnummer ein und sende uns deinen Standort — unser Team ist so schnell wie möglich bei dir.'
         : 'Simply enter your bike number and send us your location — our team will be with you as fast as possible.',
       cta: de ? 'Pannenhilfe' : 'Get help',
-      href: '/#pannenhilfe',
+      href: '#pannenhilfe',
       color: '#ea580c',
       glow: 'rgba(234,88,12,0.18)',
       mockup: <ReportMockup />,
@@ -450,6 +450,10 @@ export default function FeatureShowcase() {
                 }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.88'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}
+                  onClick={f.href.startsWith('#') ? (e) => {
+                    e.preventDefault()
+                    document.getElementById(f.href.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  } : undefined}
                 >
                   {f.cta} <ArrowRight size={15} />
                 </Link>

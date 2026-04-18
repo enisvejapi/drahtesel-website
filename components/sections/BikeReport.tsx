@@ -76,7 +76,7 @@ export default function BikeReport() {
 
   if (step === 'success') {
     return (
-      <section className="py-20 bg-[#0f0f0f]">
+      <section id="pannenhilfe" className="py-20 bg-[#0f0f0f]">
         <div className="container-site max-w-lg mx-auto text-center px-4">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/15 mb-5">
             <CheckCircle2 size={32} className="text-green-400" />
@@ -95,7 +95,7 @@ export default function BikeReport() {
   }
 
   return (
-    <section className="py-20 bg-[#0f0f0f]">
+    <section id="pannenhilfe" className="py-20 bg-[#0f0f0f]">
       <div className="container-site px-4">
         <div className="max-w-2xl mx-auto">
 
