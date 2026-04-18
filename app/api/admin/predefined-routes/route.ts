@@ -1,14 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, renameSync, existsSync, unlinkSync } from 'fs'
 import { join } from 'path'
 
 const FILE = join(process.cwd(), 'data', 'predefined-routes.json')
 
-function read() {
-  return JSON.parse(readFileSync(FILE, 'utf-8'))
+function read(): unknown[] {
+  try {
+    const raw = readFileSync(FILE, 'utf-8')
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 function write(data: unknown) {
-  writeFileSync(FILE, JSON.stringify(data, null, 2))
+  const tmp = FILE + '.tmp'
+  try {
+    writeFileSync(tmp, JSON.stringify(data, null, 2))
+    renameSync(tmp, FILE)
+  } catch (err) {
+    if (existsSync(tmp)) { try { unlinkSync(tmp) } catch {} }
+    throw err
+  }
 }
 
 export async function GET() {

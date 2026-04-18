@@ -4,7 +4,14 @@ import { jwtVerify } from 'jose'
 import { NextResponse } from 'next/server'
 
 function getSecret() {
-  return new TextEncoder().encode(process.env.JWT_SECRET ?? 'fallback-secret-change-me')
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('JWT_SECRET environment variable is not set')
+    }
+    return new TextEncoder().encode('dev-only-secret-do-not-use-in-prod')
+  }
+  return new TextEncoder().encode(secret)
 }
 
 export async function requireAdmin(): Promise<void> {

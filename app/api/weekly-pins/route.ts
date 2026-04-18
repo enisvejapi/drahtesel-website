@@ -5,13 +5,21 @@ import { join } from 'path'
 const PINS_FILE = join(process.cwd(), 'data', 'weekly-pins.json')
 
 function readPins() {
-  return JSON.parse(readFileSync(PINS_FILE, 'utf-8'))
+  try {
+    const raw = readFileSync(PINS_FILE, 'utf-8')
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 // GET — return all pins (used by client to validate)
 export async function GET() {
   try {
-    return NextResponse.json(readPins())
+    return NextResponse.json(readPins(), {
+      headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+    })
   } catch {
     return NextResponse.json([], { status: 500 })
   }

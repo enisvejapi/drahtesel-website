@@ -24,8 +24,14 @@ function writeJson<T>(filename: string, data: T): void {
   fs.mkdirSync(DATA_DIR, { recursive: true })
   const filePath = path.join(DATA_DIR, filename)
   const tmp = filePath + '.tmp'
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8')
-  fs.renameSync(tmp, filePath) // atomic write
+  try {
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8')
+    fs.renameSync(tmp, filePath) // atomic write
+  } catch (err) {
+    // Clean up orphaned tmp file if write or rename failed
+    try { if (fs.existsSync(tmp)) fs.unlinkSync(tmp) } catch {}
+    throw err
+  }
 }
 
 // Reviews

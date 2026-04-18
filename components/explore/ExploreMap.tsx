@@ -535,6 +535,7 @@ export default function ExploreMap({
 
     // ── Smooth angle helper (handles 0/360 wrap-around) ─────────────────────
     function smoothAngle(prev: number, next: number, alpha: number): number {
+      if (!isFinite(prev) || !isFinite(next)) return isFinite(prev) ? prev : 0
       const diff = ((next - prev + 540) % 360) - 180
       return (prev + alpha * diff + 360) % 360
     }
@@ -579,6 +580,8 @@ export default function ExploreMap({
     watchIdRef.current = navigator.geolocation.watchPosition(
       (pos) => {
         const { latitude: lat, longitude: lng } = pos.coords
+        // Validate coordinate ranges before using
+        if (!isFinite(lat) || !isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return
         if (!mapRef.current || !LRef.current) return
 
         const isNav = navigatingRef.current

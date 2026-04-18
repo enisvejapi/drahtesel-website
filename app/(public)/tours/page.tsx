@@ -98,11 +98,19 @@ async function fetchCyclingRoute(
     units: 'km',
   }
 
-  const res = await fetch('https://valhalla1.openstreetmap.de/route', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 15000)
+  let res: Response
+  try {
+    res = await fetch('https://valhalla1.openstreetmap.de/route', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    })
+  } finally {
+    clearTimeout(timeout)
+  }
   if (!res.ok) throw new Error('Valhalla request failed')
   const data = await res.json()
   if (!data.trip?.legs?.length) throw new Error('No cycling route found')
@@ -149,6 +157,10 @@ function ExploreApp() {
   const [distanceTraveled, setDistanceTraveled] = useState(0)
   const lastNavPosRef = useRef<{ lat: number; lng: number } | null>(null)
   const lastAdvancedStepRef = useRef<number>(-1)
+  // Refs to avoid stale closures in GPS callback
+  const activeRouteRef = useRef<ActiveRoute | null>(null)
+  const currentStepIdxRef = useRef(0)
+  const navigatingRef = useRef(false)
   const [showNavSplash, setShowNavSplash] = useState(false)
   const [showPinDialog, setShowPinDialog] = useState(false)
   const [weeklyPins, setWeeklyPins] = useState<WeeklyPin[]>([])
@@ -188,6 +200,11 @@ function ExploreApp() {
     distance: string; duration: string; difficulty: string; emoji: string;
     start: [number,number]; end: [number,number]
   }[]>([])
+
+  // Keep refs in sync with state (avoid stale closures in GPS callback)
+  useEffect(() => { activeRouteRef.current = activeRoute }, [activeRoute])
+  useEffect(() => { currentStepIdxRef.current = currentStepIdx }, [currentStepIdx])
+  useEffect(() => { navigatingRef.current = navigating }, [navigating])
 
   // Load weekly pins once
   useEffect(() => {
@@ -364,10 +381,11 @@ function ExploreApp() {
   }, [])
 
   // Track GPS position, accumulate distance traveled, auto-advance steps
+  // Uses refs to avoid stale closures — never re-created on each render
   const handlePositionUpdate = useCallback((lat: number, lng: number) => {
     setUserPos({ lat, lng })
 
-    if (!navigating) return
+    if (!navigatingRef.current) return
 
     // Accumulate real distance traveled (for accurate % progress)
     if (lastNavPosRef.current) {
@@ -380,16 +398,19 @@ function ExploreApp() {
     lastNavPosRef.current = { lat, lng }
 
     // Auto-advance to next step when near maneuver point
-    if (!activeRoute?.steps) return
-    const step = activeRoute.steps[currentStepIdx]
+    const route = activeRouteRef.current
+    const stepIdx = currentStepIdxRef.current
+    if (!route?.steps) return
+    const step = route.steps[stepIdx]
     if (!step) return
     const dist = haversineDistance([lat, lng], step.maneuverLocation)
     // Guard: only advance if not already advanced from this step index
-    if (dist < 25 && currentStepIdx < activeRoute.steps.length - 1 && lastAdvancedStepRef.current !== currentStepIdx) {
-      lastAdvancedStepRef.current = currentStepIdx
+    if (dist < 25 && stepIdx < route.steps.length - 1 && lastAdvancedStepRef.current !== stepIdx) {
+      lastAdvancedStepRef.current = stepIdx
       setCurrentStepIdx(i => i + 1)
     }
-  }, [navigating, activeRoute, currentStepIdx])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div
