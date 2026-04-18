@@ -144,13 +144,18 @@ function ExploreApp() {
   const { locale } = useLocale()
   const de = locale === 'de'
 
-  // Lock body scroll and set black background for full-screen map experience
+  // Lock body scroll, set black background, and exit fullscreen when leaving
   useEffect(() => {
     const prev = document.body.style.cssText
     document.body.style.overflow = 'hidden'
     document.body.style.background = '#0a0a0a'
     document.body.style.overscrollBehavior = 'none'
-    return () => { document.body.style.cssText = prev }
+    return () => {
+      document.body.style.cssText = prev
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {})
+      }
+    }
   }, [])
 
   const [showModal, setShowModal] = useState(true)
