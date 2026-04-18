@@ -121,48 +121,47 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
   const accentColor = isLast ? '#16a34a' : cat.color
 
   return (
-    <div className="absolute inset-0 z-[1080] pointer-events-none flex flex-col">
+    <div className="absolute inset-0 z-[1080] pointer-events-none flex flex-col nav-root">
 
       {/* ── TOP: Direction card ───────────────────────────────────────────── */}
-      <div className="pointer-events-auto px-3 pb-2" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
+      <div className="pointer-events-auto px-3 pb-2 nav-top-bar" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
+
         {/* Exit row */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-2 nav-exit-row">
           <button
             onClick={onExit}
             className="h-9 px-3 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center gap-1.5 text-gray-600 hover:text-gray-900 transition-colors text-[12px] font-bold"
           >
             <X size={15} />
-            {de ? 'Navigation beenden' : 'End navigation'}
+            <span className="nav-exit-label">{de ? 'Navigation beenden' : 'End navigation'}</span>
           </button>
-          <div className="bg-black/40 backdrop-blur text-white text-[11px] font-semibold px-3 py-1.5 rounded-full">
+          <div className="bg-black/40 backdrop-blur text-white text-[11px] font-semibold px-3 py-1.5 rounded-full nav-remaining">
             {fmtDist(distanceRemaining)} {de ? 'verbleibend' : 'remaining'}
           </div>
         </div>
 
         {/* Main instruction card */}
-        <div className="bg-[#1a1a1a]/93 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden">
-          <div className="flex items-stretch">
+        <div className="bg-[#1a1a1a]/93 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden nav-card">
+          <div className="flex items-stretch nav-card-inner">
 
             {/* Arrow block */}
             <div
-              className="flex-shrink-0 w-[76px] flex items-center justify-center rounded-l-2xl"
+              className="flex-shrink-0 w-[76px] flex items-center justify-center rounded-l-2xl nav-arrow-block"
               style={{ backgroundColor: accentColor }}
             >
               <ManeuverArrow type={step.type} modifier={step.modifier} color="white" size={30} />
             </div>
 
             {/* Text */}
-            <div className="flex-1 px-4 py-3.5">
-              {/* Distance to THIS maneuver */}
+            <div className="flex-1 px-4 py-3.5 nav-card-text">
               <div className="text-white/60 text-[11px] font-bold mb-0.5">
                 {step.distance > 10 ? `${fmtDist(step.distance)} →` : (de ? 'Jetzt' : 'Now')}
               </div>
-              <div className="text-white font-extrabold text-[18px] leading-tight">
+              <div className="text-white font-extrabold text-[18px] leading-tight nav-instruction">
                 {instruction}
               </div>
-              {/* Preview next step */}
               {nextStep && !isLast && (
-                <div className="text-white/45 text-[11px] mt-1 truncate">
+                <div className="text-white/45 text-[11px] mt-1 truncate nav-next">
                   {de ? 'Dann: ' : 'Then: '}{getInstruction(nextStep, de)}
                 </div>
               )}
@@ -173,7 +172,7 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
       </div>
 
       {/* ── Transparent middle — map shows through ───────────────────────── */}
-      <div className="flex-1" />
+      <div className="flex-1 nav-spacer" />
 
       {/* ── BOTTOM: Progress bar + destination ───────────────────────────── */}
       <div className="pointer-events-auto px-3 nav-bottom-bar">
@@ -187,7 +186,6 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
           </div>
 
           <div className="px-4 py-3 flex items-center gap-3">
-            {/* Destination info */}
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 nav-dest-icon"
               style={{ backgroundColor: `${cat.color}18` }}
@@ -215,14 +213,86 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
       </div>
 
       <style>{`
+        /* ── Portrait (default) ── */
         .nav-bottom-bar {
           padding-bottom: max(16px, env(safe-area-inset-bottom));
         }
-        /* Landscape: hide destination label, shrink icon */
+
+        /* ── Landscape sidebar layout ── */
         @media (orientation: landscape) and (max-height: 500px) {
-          .nav-bottom-bar { padding-bottom: max(6px, env(safe-area-inset-bottom)); }
-          .nav-dest-icon  { width: 32px !important; height: 32px !important; font-size: 14px !important; }
-          .nav-dest-label { display: none; }
+
+          /* Outer container: switch to row so sidebar sits left of map */
+          .nav-root {
+            flex-direction: row !important;
+            align-items: stretch !important;
+          }
+
+          /* Left sidebar */
+          .nav-top-bar {
+            width: 210px !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: max(8px, env(safe-area-inset-top)) 8px 8px 8px !important;
+            gap: 6px !important;
+          }
+
+          /* Exit row: stack vertically, no justify-between */
+          .nav-exit-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 5px !important;
+          }
+
+          /* Remaining pill: full width */
+          .nav-remaining {
+            width: 100% !important;
+            text-align: center !important;
+            border-radius: 10px !important;
+          }
+
+          /* Instruction card: grow to fill sidebar height */
+          .nav-card {
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .nav-card-inner {
+            flex: 1 !important;
+            flex-direction: column !important;
+          }
+
+          /* Arrow block: full width, fixed height */
+          .nav-arrow-block {
+            width: 100% !important;
+            height: 56px !important;
+            border-radius: 16px 16px 0 0 !important;
+          }
+
+          /* Text block: compact */
+          .nav-card-text {
+            padding: 10px 12px 12px !important;
+          }
+          .nav-instruction { font-size: 14px !important; }
+          .nav-next        { display: none !important; }
+
+          /* Spacer not needed in sidebar layout */
+          .nav-spacer { display: none !important; }
+
+          /* Bottom bar: slim strip at bottom-right of map */
+          .nav-bottom-bar {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 210px !important;
+            right: 0 !important;
+            padding: 4px 8px max(4px, env(safe-area-inset-bottom)) !important;
+          }
+          .nav-bottom-bar > div {
+            border-radius: 14px 14px 0 0 !important;
+          }
+          .nav-dest-label { display: none !important; }
+          .nav-dest-icon  { width: 28px !important; height: 28px !important; font-size: 13px !important; }
+          .nav-bottom-bar .px-4 { padding: 6px 12px !important; }
         }
       `}</style>
     </div>
