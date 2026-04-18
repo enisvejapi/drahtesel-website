@@ -1,6 +1,7 @@
 'use client'
 
-import { X, Flag } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { X, Flag, Maximize2, Minimize2 } from 'lucide-react'
 import type { InterestPin } from '@/lib/interest-pins'
 import { PIN_CATEGORIES } from '@/lib/interest-pins'
 import type { RouteStep } from './ExploreMap'
@@ -101,6 +102,26 @@ function getInstruction(step: RouteStep, de: boolean): string {
 export default function NavigationView({ pin, steps, stepIdx, totalDistance, distanceTraveled, userLat, userLng, locale, onExit }: Props) {
   const de = locale === 'de'
   const cat = PIN_CATEGORIES[pin.category]
+
+  // ── Fullscreen ────────────────────────────────────────────────────────────
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showIosHint, setShowIosHint] = useState(false)
+  const isIOS = useRef(typeof navigator !== 'undefined' && /iP(hone|ad|od)/.test(navigator.userAgent)).current
+
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', handler)
+    return () => document.removeEventListener('fullscreenchange', handler)
+  }, [])
+
+  const toggleFullscreen = useCallback(() => {
+    if (isIOS) { setShowIosHint(h => !h); return }
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {})
+    } else {
+      document.exitFullscreen?.().catch(() => {})
+    }
+  }, [isIOS])
   const step = steps[stepIdx]
   const nextStep = steps[stepIdx + 1] ?? null
   const isLast = stepIdx >= steps.length - 1
@@ -135,8 +156,31 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
             <X size={15} />
             <span className="nav-exit-label">{de ? 'Navigation beenden' : 'End navigation'}</span>
           </button>
-          <div className="bg-black/40 backdrop-blur text-white text-[11px] font-semibold px-3 py-1.5 rounded-full nav-remaining">
-            {fmtDist(distanceRemaining)} {de ? 'verbleibend' : 'remaining'}
+
+          <div className="flex items-center gap-2">
+            {/* Fullscreen button */}
+            <div className="relative">
+              <button
+                onClick={toggleFullscreen}
+                className="h-9 w-9 bg-black/40 backdrop-blur rounded-xl flex items-center justify-center text-white/80 hover:text-white transition-colors"
+              >
+                {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+              </button>
+              {showIosHint && (
+                <div
+                  className="absolute top-11 right-0 z-[2000] bg-black text-white text-[11px] font-semibold px-3 py-2.5 rounded-xl shadow-2xl w-56 leading-snug"
+                  onClick={() => setShowIosHint(false)}
+                >
+                  <div className="font-extrabold mb-1">{de ? 'Vollbild auf iPhone' : 'Fullscreen on iPhone'}</div>
+                  {de ? 'Teilen → „Zum Home-Bildschirm"' : 'Share → "Add to Home Screen"'}
+                  <div className="text-white/40 text-[9px] mt-1.5">{de ? 'Tippen zum Schließen' : 'Tap to dismiss'}</div>
+                </div>
+              )}
+            </div>
+
+            <div className="bg-black/40 backdrop-blur text-white text-[11px] font-semibold px-3 py-1.5 rounded-full nav-remaining">
+              {fmtDist(distanceRemaining)} {de ? 'verbleibend' : 'remaining'}
+            </div>
           </div>
         </div>
 
