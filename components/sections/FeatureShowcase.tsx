@@ -383,8 +383,12 @@ export default function FeatureShowcase() {
             opacity: animating ? 0 : 1,
             transition2: 'transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.38s ease',
           } as React.CSSProperties}
-            // Inline override for dual transitions
             className="feature-slide-card"
+            onTouchStart={e => { touchStartX.current = e.touches[0].clientX }}
+            onTouchEnd={e => {
+              const dx = touchStartX.current - e.changedTouches[0].clientX
+              if (Math.abs(dx) > 45) go(dx > 0 ? 'right' : 'left')
+            }}
           >
             <div style={{
               display: 'grid',
@@ -484,16 +488,6 @@ export default function FeatureShowcase() {
           >
             <ChevronRight size={20} />
           </button>
-
-          {/* Touch swipe */}
-          <div
-            style={{ position:'absolute', inset:0, zIndex:5 }}
-            onTouchStart={e => { touchStartX.current = e.touches[0].clientX }}
-            onTouchEnd={e => {
-              const dx = touchStartX.current - e.changedTouches[0].clientX
-              if (Math.abs(dx) > 45) go(dx > 0 ? 'right' : 'left')
-            }}
-          />
 
           {/* Dot indicators + counter */}
           <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:24 }}>
