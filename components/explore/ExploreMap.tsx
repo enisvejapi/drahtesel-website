@@ -88,6 +88,9 @@ export default function ExploreMap({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pinMarkersRef = useRef<any[]>([])
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const clusterGroupRef = useRef<any>(null)
+  const [mapZoom, setMapZoom] = useState(13)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const startMarkerRef = useRef<any>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const routePolylineRef = useRef<any>(null)
@@ -185,13 +188,16 @@ export default function ExploreMap({
       document.head.appendChild(style)
     }
 
-    import('leaflet').then((L) => {
-      if (!containerRef.current || mapRef.current) return
+    let cancelled = false
+
+    import('leaflet').then(async (L) => {
+      if (cancelled || !containerRef.current || mapRef.current) return
       LRef.current = L
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (L.Icon.Default.prototype as any)._getIconUrl
 
+      // Create the map first — pins are always visible regardless of clustering
       const map = L.map(containerRef.current, {
         center: [53.7080, 7.1900],
         zoom: 13,
@@ -208,6 +214,13 @@ export default function ExploreMap({
         maxZoom: 19,
       }).addTo(map)
 
+      // Update zoom state when map zooms → triggers pin re-cluster
+      map.on('zoomend', () => setMapZoom(map.getZoom()))
+
+      setTimeout(() => map.invalidateSize(), 100)
+      setTimeout(() => map.invalidateSize(), 500)
+      if (!cancelled) setMapReady(true)
+
       // Shop marker — interactive, routes back to shop like a pin
       const shopIcon = L.divIcon({
         className: '',
@@ -218,28 +231,11 @@ export default function ExploreMap({
             cursor:pointer;
           ">
             <div style="
-              position:relative;
-              width:48px;height:62px;
-              filter:drop-shadow(0 4px 12px rgba(200,16,46,0.45));
+              width:48px;height:48px;border-radius:14px;overflow:hidden;
+              box-shadow:0 4px 14px rgba(200,16,46,0.45);
+              border:2.5px solid white;
             ">
-              <svg viewBox="0 0 52 66" width="48" height="62" fill="none">
-                <path d="M26 2C15.51 2 7 10.51 7 21c0 12.88 19 43 19 43S45 33.88 45 21C45 10.51 36.49 2 26 2z" fill="#C8102E"/>
-                <circle cx="26" cy="21" r="14" fill="white"/>
-              </svg>
-              <div style="
-                position:absolute;
-                top:4px;
-                left:50%;
-                transform:translateX(-50%);
-                display:flex;align-items:center;justify-content:center;
-              ">
-                <svg viewBox="0 0 24 24" width="18" height="18"
-                  fill="none" stroke="#C8102E" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                  <circle cx="12" cy="9" r="2.5"/>
-                </svg>
-              </div>
+              <img src="/logo.jpg" width="48" height="48" style="width:100%;height:100%;object-fit:cover;display:block;" />
             </div>
             <div style="
               margin-top:4px;
@@ -251,9 +247,9 @@ export default function ExploreMap({
               border:1.5px solid #C8102E30;
             ">Drahtesel</div>
           </div>`,
-        iconSize: [48, 90],
-        iconAnchor: [24, 62],
-        popupAnchor: [0, -70],
+        iconSize: [48, 68],
+        iconAnchor: [24, 48],
+        popupAnchor: [0, -55],
       })
       L.marker(SHOP_LOCATION, { icon: shopIcon, zIndexOffset: 100 })
         .addTo(map)
@@ -267,21 +263,18 @@ export default function ExploreMap({
         }
       })
 
-      setTimeout(() => map.invalidateSize(), 100)
-      setTimeout(() => map.invalidateSize(), 500)
-
-      // Signal that the map + Leaflet are ready — triggers pin rendering
-      setMapReady(true)
     })
 
     return () => {
-      if (watchIdRef.current !== null) navigator.geolocation.clearWatch(watchIdRef.current)
-      if (mapRef.current) { mapRef.current.remove(); mapRef.current = null }
+      cancelled = true
+      if (watchIdRef.current !== null) { navigator.geolocation.clearWatch(watchIdRef.current); watchIdRef.current = null }
+      clusterGroupRef.current = null
+      if (mapRef.current) { try { mapRef.current.remove() } catch {} ; mapRef.current = null }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Render pins ─────────────────────────────────────────────────────────────
+  // ── Render pins with custom clustering ──────────────────────────────────────
   useEffect(() => {
     const L = LRef.current
     const map = mapRef.current
@@ -290,90 +283,106 @@ export default function ExploreMap({
     pinMarkersRef.current.forEach(m => { try { m.remove() } catch {} })
     pinMarkersRef.current = []
 
-    // SVG icon paths per category (Lucide-style, stroke-only, viewBox 0 0 24 24)
-    const CATEGORY_ICON: Record<string, string> = {
-      history:   `<path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-5h4v5"/>`,
-      beach:     `<path d="M2 10.5c2.5-3 6-3 9-.5s6.5 2.5 9-.5M2 16.5c2.5-3 6-3 9-.5s6.5 2.5 9-.5"/>`,
-      nature:    `<path d="M12 22v-9M12 13C9 10 5 9 3 11c2 0 5 2 9 2zM12 13c3-3 7-4 9-2-2 0-5 2-9 2"/>`,
-      food:      `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
-      viewpoint: `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`,
-      landmark:  `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
+    // Always-visible logo pins — never clustered
+    const ALWAYS_VISIBLE = new Set(['kurpalais', 'duefratelli'])
+    const alwaysPins = pins.filter(p => ALWAYS_VISIBLE.has(p.category))
+    const clusterablePins = pins.filter(p => !ALWAYS_VISIBLE.has(p.category))
+
+    // ── Custom clustering: group pins within distance threshold (zoom-aware) ──
+    // Cluster radius in meters, decreases as user zooms in
+    const clusterRadiusM = mapZoom >= 16 ? 60 : mapZoom >= 15 ? 120 : mapZoom >= 14 ? 200 : 350
+
+    const pts = clusterablePins.map(pin => ({ pin }))
+
+    const assigned = new Set<number>()
+    const groups: { pin: InterestPin }[][] = []
+
+    for (let i = 0; i < pts.length; i++) {
+      if (assigned.has(i)) continue
+      const group = [pts[i]]
+      assigned.add(i)
+      for (let j = i + 1; j < pts.length; j++) {
+        if (assigned.has(j)) continue
+        const close = group.some(g =>
+          haversine([g.pin.lat, g.pin.lng], [pts[j].pin.lat, pts[j].pin.lng]) < clusterRadiusM
+        )
+        if (close) { group.push(pts[j]); assigned.add(j) }
+      }
+      groups.push(group)
     }
 
-    pins.forEach(pin => {
-      const cat = PIN_CATEGORIES[pin.category]
-      const isSelected = selectedPin?.id === pin.id
-      const iconPath = CATEGORY_ICON[pin.category] ?? CATEGORY_ICON.landmark
-      const sz = isSelected ? 52 : 40
-      const innerR = isSelected ? 16 : 12
+    // ── Render each group ────────────────────────────────────────────────────
+    groups.forEach(group => {
+      if (group.length === 1) {
+        // Single pin — normal marker
+        const { pin } = group[0]
+        const cat = PIN_CATEGORIES[pin.category]
+        const isSelected = selectedPin?.id === pin.id
+        const sz = isSelected ? 40 : 30
+        const innerR = isSelected ? 12 : 9
+        const pinH = Math.round(sz * 1.28)
 
-      const html = `
-        <div style="
-          display:flex;flex-direction:column;align-items:center;
-          animation:pinDrop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
-          cursor:pointer;
-        ">
-          ${isSelected ? `
-            <div style="
-              position:absolute;
-              width:${sz}px;height:${sz}px;
-              border-radius:50%;
-              background:${cat.color};
-              animation:pinPulseRing 1.4s ease-out infinite;
-            "></div>` : ''}
-          <div style="
-            position:relative;
-            width:${sz}px;height:${Math.round(sz * 1.28)}px;
-            filter:drop-shadow(0 ${isSelected ? 6 : 3}px ${isSelected ? 14 : 8}px rgba(0,0,0,${isSelected ? 0.45 : 0.28}));
-          ">
-            <svg viewBox="0 0 52 66" width="${sz}" height="${Math.round(sz * 1.28)}" fill="none">
+        const labelHtml = isSelected
+          ? `<div style="margin-top:5px;background:white;color:${cat.color};font-size:11px;font-weight:800;font-family:system-ui,sans-serif;padding:3px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,0.18);border:1.5px solid ${cat.color}30;">${de ? pin.title.de : pin.title.en}</div>`
+          : `<div style="margin-top:3px;background:white;color:#333;font-size:9px;font-weight:700;font-family:system-ui,sans-serif;padding:2px 6px;border-radius:20px;white-space:nowrap;box-shadow:0 1px 5px rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.08);max-width:90px;overflow:hidden;text-overflow:ellipsis;">${de ? pin.title.de : pin.title.en}</div>`
+
+        const html = `<div style="display:flex;flex-direction:column;align-items:center;animation:pinDrop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;cursor:pointer;">
+          ${isSelected ? `<div style="position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;background:${cat.color};animation:pinPulseRing 1.4s ease-out infinite;"></div>` : ''}
+          <div style="position:relative;width:${sz}px;height:${pinH}px;filter:drop-shadow(0 ${isSelected ? 6 : 3}px ${isSelected ? 14 : 8}px rgba(0,0,0,${isSelected ? 0.45 : 0.28}));">
+            <svg viewBox="0 0 52 66" width="${sz}" height="${pinH}" fill="none">
               <path d="M26 2C15.51 2 7 10.51 7 21c0 12.88 19 43 19 43S45 33.88 45 21C45 10.51 36.49 2 26 2z" fill="${cat.color}"/>
               <circle cx="26" cy="21" r="${innerR}" fill="white"/>
             </svg>
-            <div style="
-              position:absolute;
-              top:${isSelected ? 5 : 4}px;
-              left:50%;
-              transform:translateX(-50%);
-              display:flex;align-items:center;justify-content:center;
-            ">
-              <svg viewBox="0 0 24 24" width="${isSelected ? 20 : 15}" height="${isSelected ? 20 : 15}"
-                fill="none" stroke="${cat.color}" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                ${iconPath}
-              </svg>
-            </div>
           </div>
-          ${isSelected ? `
-            <div style="
-              margin-top:5px;
-              background:white;
-              color:${cat.color};
-              font-size:11px;font-weight:800;font-family:system-ui,sans-serif;
-              padding:3px 10px;border-radius:20px;white-space:nowrap;
-              box-shadow:0 3px 10px rgba(0,0,0,0.18);
-              border:1.5px solid ${cat.color}30;
-            ">${de ? pin.title.de : pin.title.en}</div>` : ''}
+          ${labelHtml}
         </div>`
 
+        const icon = L.divIcon({ className: '', html, iconSize: [sz, pinH + (isSelected ? 24 : 18)], iconAnchor: [sz / 2, pinH] })
+        const marker = L.marker([pin.lat, pin.lng], { icon, zIndexOffset: isSelected ? 1000 : 500 })
+          .addTo(map).on('click', () => onPinSelect(pin))
+        pinMarkersRef.current.push(marker)
+      } else {
+        // Cluster bubble
+        const centerLat = group.reduce((s, g) => s + g.pin.lat, 0) / group.length
+        const centerLng = group.reduce((s, g) => s + g.pin.lng, 0) / group.length
+        const count = group.length
+        const icon = L.divIcon({
+          className: '',
+          html: `<div style="width:42px;height:42px;background:#1a1a1a;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;font-family:system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:pointer;">${count}</div>`,
+          iconSize: [42, 42], iconAnchor: [21, 21],
+        })
+        const marker = L.marker([centerLat, centerLng], { icon, zIndexOffset: 600 })
+          .addTo(map)
+          .on('click', () => map.setView([centerLat, centerLng], map.getZoom() + 3))
+        pinMarkersRef.current.push(marker)
+      }
+    })
+
+    // ── Always-visible logo pins (Kurpalais, Due Fratelli, …) ────────────────
+    alwaysPins.forEach(pin => {
+      const cat = PIN_CATEGORIES[pin.category]
+      const isSelected = selectedPin?.id === pin.id
+      const sz = isSelected ? 52 : 44
+      const logoSrc = cat.image ?? ''
+      const label = de ? pin.title.de : pin.title.en
       const icon = L.divIcon({
         className: '',
-        html,
-        iconSize: isSelected ? [sz, Math.round(sz * 1.28) + 28] : [sz, Math.round(sz * 1.28)],
-        iconAnchor: [sz / 2, Math.round(sz * 1.28)],
+        html: `<div style="display:flex;flex-direction:column;align-items:center;animation:pinDrop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;cursor:pointer;">
+          ${isSelected ? `<div style="position:absolute;width:${sz}px;height:${sz}px;border-radius:16px;background:${cat.color};animation:pinPulseRing 1.4s ease-out infinite;"></div>` : ''}
+          <div style="width:${sz}px;height:${sz}px;border-radius:${isSelected ? 16 : 13}px;overflow:hidden;box-shadow:0 4px 16px ${cat.color}66;border:${isSelected ? 3 : 2}px solid white;background:white;">
+            <img src="${logoSrc}" width="${sz}" height="${sz}" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          </div>
+          <div style="margin-top:4px;background:white;color:${cat.color};font-size:${isSelected ? 10 : 8}px;font-weight:800;font-family:system-ui,sans-serif;padding:${isSelected ? '3px 10px' : '2px 6px'};border-radius:20px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.15);border:1.5px solid ${cat.color}40;max-width:100px;overflow:hidden;text-overflow:ellipsis;">${label}</div>
+        </div>`,
+        iconSize: [sz, sz + (isSelected ? 26 : 20)],
+        iconAnchor: [sz / 2, sz],
       })
-
-      const marker = L.marker([pin.lat, pin.lng], {
-        icon,
-        zIndexOffset: isSelected ? 1000 : 500,
-      })
-        .addTo(map)
-        .on('click', () => onPinSelect(pin))
-
+      const marker = L.marker([pin.lat, pin.lng], { icon, zIndexOffset: isSelected ? 1000 : 500 })
+        .addTo(map).on('click', () => onPinSelect(pin))
       pinMarkersRef.current.push(marker)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, selectedPin, de, mapReady])
+  }, [pins, selectedPin, de, mapReady, mapZoom])
 
   // ── Start location marker ───────────────────────────────────────────────────
   useEffect(() => {

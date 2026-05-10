@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Plus, Pencil, Trash2, X, Check, MapPin } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, Check, MapPin, Languages } from 'lucide-react'
 
 const RouteMapPicker = dynamic(() => import('@/components/admin/RouteMapPicker'), { ssr: false })
 
@@ -16,6 +16,7 @@ interface PredefinedRoute {
   emoji: string
   start: [number, number]
   end: [number, number]
+  waypoints?: [number, number][]
 }
 
 const EMPTY_FORM = {
@@ -24,11 +25,29 @@ const EMPTY_FORM = {
   distance: '', duration: '',
   difficulty: 'easy',
   emoji: '🚲',
-  startLat: '', startLng: '',
   endLat: '', endLng: '',
+  waypoints: [] as [number, number][],
 }
 
 const EMOJIS = ['🚲','🏮','🏖️','🌿','👨‍👩‍👧','🏔️','🌊','🦅','🌅','🏛️','⛵','🌾']
+
+const IMAGE_EMOJIS = [
+  { src: '/emoji/leuchtturm.png', label: 'Leuchtturm' },
+  { src: '/emoji/theater.png',    label: 'Theater'    },
+  { src: '/emoji/robbe.png',      label: 'Robbe'      },
+  { src: '/emoji/tower.png',      label: 'Turm'       },
+  { src: '/emoji/denkmal.png',    label: 'Denkmal'    },
+]
+
+function EmojiDisplay({ value, size = 'md' }: { value: string; size?: 'sm' | 'md' | 'lg' }) {
+  const px = size === 'sm' ? 20 : size === 'lg' ? 40 : 28
+  if (value.startsWith('/')) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={value} alt="" width={px} height={px} style={{ objectFit: 'contain' }} />
+  }
+  const textSize = size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-4xl' : 'text-2xl'
+  return <span className={textSize}>{value}</span>
+}
 
 export default function PredefinedRoutesAdmin() {
   const [routes, setRoutes] = useState<PredefinedRoute[]>([])
@@ -38,6 +57,7 @@ export default function PredefinedRoutesAdmin() {
   const [form, setForm] = useState({ ...EMPTY_FORM })
   const [saving, setSaving] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [translating, setTranslating] = useState(false)
 
   useEffect(() => { load() }, [])
 
@@ -60,15 +80,15 @@ export default function PredefinedRoutesAdmin() {
       descriptionDe: r.description.de, descriptionEn: r.description.en,
       distance: r.distance, duration: r.duration,
       difficulty: r.difficulty, emoji: r.emoji,
-      startLat: String(r.start[0]), startLng: String(r.start[1]),
-      endLat: String(r.end[0]),   endLng: String(r.end[1]),
+      endLat: String(r.end[0]), endLng: String(r.end[1]),
+      waypoints: r.waypoints ?? [],
     })
     setEditId(r.id)
     setShowForm(true)
   }
 
   async function handleSave() {
-    if (!form.nameDe || !form.startLat || !form.startLng || !form.endLat || !form.endLng) return
+    if (!form.nameDe || !form.endLat || !form.endLng) return
     setSaving(true)
     const url = editId
       ? `/api/admin/predefined-routes/${editId}`
@@ -76,7 +96,7 @@ export default function PredefinedRoutesAdmin() {
     await fetch(url, {
       method: editId ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, waypoints: form.waypoints }),
     })
     await load()
     setSaving(false)
@@ -94,6 +114,28 @@ export default function PredefinedRoutesAdmin() {
 
   const f = (key: keyof typeof EMPTY_FORM, val: string) =>
     setForm(prev => ({ ...prev, [key]: val }))
+
+  async function translateToEn() {
+    if (!form.nameDe && !form.descriptionDe) return
+    setTranslating(true)
+    try {
+      async function tr(text: string) {
+        if (!text) return ''
+        const res = await fetch(
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=de|en`
+        )
+        const data = await res.json()
+        return data.responseData?.translatedText ?? ''
+      }
+      const [nameEn, descriptionEn] = await Promise.all([
+        tr(form.nameDe),
+        tr(form.descriptionDe),
+      ])
+      setForm(prev => ({ ...prev, nameEn, descriptionEn }))
+    } finally {
+      setTranslating(false)
+    }
+  }
 
   return (
     <div>
@@ -118,7 +160,7 @@ export default function PredefinedRoutesAdmin() {
         </div>
       ) : routes.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4 text-3xl">🚲</div>
+          <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-4"><EmojiDisplay value="🚲" size="lg" /></div>
           <p className="text-gray-400 text-sm">Noch keine Touren. Füge deine erste Route hinzu.</p>
         </div>
       ) : (
@@ -126,8 +168,8 @@ export default function PredefinedRoutesAdmin() {
           {routes.map(r => (
             <div key={r.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-2xl flex-shrink-0">
-                  {r.emoji}
+                <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center flex-shrink-0">
+                  <EmojiDisplay value={r.emoji} size="md" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
@@ -160,7 +202,7 @@ export default function PredefinedRoutesAdmin() {
                     </span>
                   </div>
                   <div className="flex gap-3 mt-2 text-[10px] text-gray-300 font-mono">
-                    <span className="flex items-center gap-1"><MapPin size={9} className="text-green-500"/>A: {r.start[0].toFixed(4)}, {r.start[1].toFixed(4)}</span>
+                    <span className="flex items-center gap-1"><MapPin size={9} className="text-green-500"/>A: GPS des Gastes</span>
                     <span className="flex items-center gap-1"><MapPin size={9} className="text-brand-red"/>B: {r.end[0].toFixed(4)}, {r.end[1].toFixed(4)}</span>
                   </div>
                 </div>
@@ -186,7 +228,28 @@ export default function PredefinedRoutesAdmin() {
 
               {/* Emoji picker */}
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Emoji</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Icon</label>
+
+                {/* Custom image icons */}
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Eigene Icons</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {IMAGE_EMOJIS.map(img => (
+                    <button
+                      key={img.src}
+                      onClick={() => f('emoji', img.src)}
+                      title={img.label}
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all p-1.5 ${
+                        form.emoji === img.src ? 'bg-brand-red/10 ring-2 ring-brand-red scale-110' : 'bg-gray-50 hover:bg-gray-100'
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img.src} alt={img.label} className="w-full h-full object-contain" />
+                    </button>
+                  ))}
+                </div>
+
+                {/* Standard emojis */}
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Emojis</p>
                 <div className="flex flex-wrap gap-2">
                   {EMOJIS.map(e => (
                     <button key={e} onClick={() => f('emoji', e)}
@@ -195,7 +258,7 @@ export default function PredefinedRoutesAdmin() {
                     </button>
                   ))}
                   <input
-                    value={form.emoji}
+                    value={form.emoji.startsWith('/') ? '' : form.emoji}
                     onChange={e => f('emoji', e.target.value)}
                     className="w-10 h-10 rounded-xl border border-gray-200 text-center text-xl bg-gray-50 outline-none"
                     maxLength={2}
@@ -205,32 +268,45 @@ export default function PredefinedRoutesAdmin() {
               </div>
 
               {/* Names */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Name (DE) *</label>
-                  <input value={form.nameDe} onChange={e => f('nameDe', e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors"
-                    placeholder="Leuchtturm-Tour" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Name (EN)</label>
-                  <input value={form.nameEn} onChange={e => f('nameEn', e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors"
-                    placeholder="Lighthouse Tour" />
-                </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Name (DE) *</label>
+                <input value={form.nameDe} onChange={e => f('nameDe', e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors"
+                  placeholder="Leuchtturm-Tour" />
               </div>
 
               {/* Descriptions */}
               <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Beschreibung (DE)</label>
                 <textarea value={form.descriptionDe} onChange={e => f('descriptionDe', e.target.value)}
-                  rows={2} className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors resize-none"
+                  rows={3} className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors resize-none"
                   placeholder="Kurze Beschreibung auf Deutsch…" />
+              </div>
+
+              {/* Auto-translate button */}
+              <button
+                type="button"
+                onClick={translateToEn}
+                disabled={translating || (!form.nameDe && !form.descriptionDe)}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border-2 border-dashed border-gray-200 text-xs font-bold text-gray-500 hover:border-brand-red hover:text-brand-red transition-colors disabled:opacity-40"
+              >
+                {translating
+                  ? <><div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" /> Übersetze…</>
+                  : <><Languages size={14} /> Automatisch auf Englisch übersetzen</>
+                }
+              </button>
+
+              {/* EN fields (auto-filled, editable) */}
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Name (EN)</label>
+                <input value={form.nameEn} onChange={e => f('nameEn', e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors"
+                  placeholder="Lighthouse Tour" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Description (EN)</label>
                 <textarea value={form.descriptionEn} onChange={e => f('descriptionEn', e.target.value)}
-                  rows={2} className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors resize-none"
+                  rows={3} className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-brand-red transition-colors resize-none"
                   placeholder="Short description in English…" />
               </div>
 
@@ -261,14 +337,14 @@ export default function PredefinedRoutesAdmin() {
               {/* Map Picker */}
               <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                  Start- &amp; Zielpunkt *
+                  Zielpunkt * <span className="text-gray-400 normal-case font-normal">(Startpunkt = GPS des Gastes)</span>
                 </label>
                 <RouteMapPicker
-                  startLat={form.startLat}
-                  startLng={form.startLng}
                   endLat={form.endLat}
                   endLng={form.endLng}
-                  onChange={(field, val) => f(field, val)}
+                  waypoints={form.waypoints}
+                  onChange={(field, val) => f(field as keyof typeof EMPTY_FORM, val)}
+                  onWaypointsChange={wp => setForm(prev => ({ ...prev, waypoints: wp }))}
                 />
               </div>
             </div>
@@ -279,7 +355,7 @@ export default function PredefinedRoutesAdmin() {
                 className="flex-1 py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-500 hover:bg-gray-50 transition-colors">
                 Abbrechen
               </button>
-              <button onClick={handleSave} disabled={saving || !form.nameDe || !form.startLat || !form.endLat}
+              <button onClick={handleSave} disabled={saving || !form.nameDe || !form.endLat}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-red text-white text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50">
                 {saving ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Check size={15} />}
                 {editId ? 'Speichern' : 'Hinzufügen'}

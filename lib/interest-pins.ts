@@ -1,4 +1,5 @@
 export type PinCategory = 'history' | 'beach' | 'nature' | 'food' | 'viewpoint' | 'landmark'
+  | 'leuchtturm' | 'theater' | 'robbe' | 'tower' | 'denkmal' | 'kurpalais' | 'duefratelli'
 
 export interface InterestPin {
   id: string
@@ -16,13 +17,21 @@ export const PIN_CATEGORIES: Record<PinCategory, {
   emoji: string
   color: string
   label: { de: string; en: string }
+  image?: string   // custom image icon path (overrides lucide icon)
 }> = {
-  history:   { emoji: '🏛️', color: '#8B5CF6', label: { de: 'Geschichte',        en: 'History'    } },
-  beach:     { emoji: '🏖️', color: '#0EA5E9', label: { de: 'Strand',            en: 'Beach'      } },
-  nature:    { emoji: '🌿', color: '#16A34A', label: { de: 'Natur',             en: 'Nature'     } },
-  food:      { emoji: '🍽️', color: '#F59E0B', label: { de: 'Essen & Trinken',   en: 'Food'       } },
-  viewpoint: { emoji: '👁️', color: '#EC4899', label: { de: 'Aussichtspunkt',    en: 'Viewpoint'  } },
-  landmark:  { emoji: '📍', color: '#C8102E', label: { de: 'Sehenswürdigkeit',  en: 'Landmark'   } },
+  history:    { emoji: '🏛️', color: '#8B5CF6', label: { de: 'Geschichte',        en: 'History'    } },
+  beach:      { emoji: '🏖️', color: '#0EA5E9', label: { de: 'Strand',            en: 'Beach'      } },
+  nature:     { emoji: '🌿', color: '#16A34A', label: { de: 'Natur',             en: 'Nature'     } },
+  food:       { emoji: '🍽️', color: '#F59E0B', label: { de: 'Essen & Trinken',   en: 'Food'       } },
+  viewpoint:  { emoji: '👁️', color: '#EC4899', label: { de: 'Aussichtspunkt',    en: 'Viewpoint'  } },
+  landmark:   { emoji: '📍', color: '#C8102E', label: { de: 'Sehenswürdigkeit',  en: 'Landmark'   } },
+  leuchtturm: { emoji: '🗼', color: '#EA580C', label: { de: 'Leuchtturm',        en: 'Lighthouse' }, image: '/emoji/leuchtturm.png' },
+  theater:    { emoji: '🎭', color: '#7C3AED', label: { de: 'Theater',           en: 'Theatre'    }, image: '/emoji/theater.png'    },
+  robbe:      { emoji: '🦭', color: '#0284C7', label: { de: 'Robbe / Park',      en: 'Seal / Park'}, image: '/emoji/robbe.png'      },
+  tower:      { emoji: '🏯', color: '#65A30D', label: { de: 'Turm',             en: 'Tower'      }, image: '/emoji/tower.png'      },
+  denkmal:    { emoji: '🗿', color: '#92400E', label: { de: 'Denkmal',           en: 'Monument'   }, image: '/emoji/denkmal.png'    },
+  kurpalais:   { emoji: '☕', color: '#E91E8C', label: { de: 'Kurpalais',         en: 'Kurpalais'  }, image: '/kurpalais-logo.png'    },
+  duefratelli: { emoji: '🍕', color: '#C8102E', label: { de: 'Pizzeria',          en: 'Pizzeria'   }, image: '/duefratelli-logo.png'  },
 }
 
 export const DEFAULT_PINS: InterestPin[] = [

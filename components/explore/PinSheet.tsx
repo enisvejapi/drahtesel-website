@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { X, Navigation2, Loader2, Lightbulb, ChevronRight } from 'lucide-react'
 import type { InterestPin } from '@/lib/interest-pins'
 import { PIN_CATEGORIES } from '@/lib/interest-pins'
+import CategoryIcon from '@/components/CategoryIcon'
 
 interface Props {
   pin: InterestPin
@@ -132,10 +133,10 @@ export default function PinSheet({ pin, locale, routeLoading, hasRoute, onGetRou
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 {!hasImage && (
                   <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: `${cat.color}18` }}
                   >
-                    {cat.emoji}
+                    <CategoryIcon category={pin.category} size={22} color={cat.color} />
                   </div>
                 )}
                 <div className="min-w-0 flex-1">

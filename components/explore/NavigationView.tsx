@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { X, Flag, Maximize2, Minimize2 } from 'lucide-react'
 import type { InterestPin } from '@/lib/interest-pins'
 import { PIN_CATEGORIES } from '@/lib/interest-pins'
+import CategoryIcon from '@/components/CategoryIcon'
 import type { RouteStep } from './ExploreMap'
 
 interface Props {
@@ -231,10 +232,10 @@ export default function NavigationView({ pin, steps, stepIdx, totalDistance, dis
 
           <div className="px-4 py-3 flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 nav-dest-icon"
+              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 nav-dest-icon"
               style={{ backgroundColor: `${cat.color}18` }}
             >
-              {isLast ? '🏁' : cat.emoji}
+              <CategoryIcon category={pin.category} size={18} color={isLast ? '#16a34a' : cat.color} isFinish={isLast} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[11px] text-gray-500 font-semibold nav-dest-label">

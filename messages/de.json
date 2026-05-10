@@ -10,19 +10,19 @@
     "bookBike": "Fahrrad buchen"
   },
   "hero": {
-    "badge": "4.9 ★ — Bestes Fahrradverleih",
+    "badge": "4.6 ★ — Bestes Fahrradverleih",
     "title1": "Fahrrad mieten.",
-    "title2": "Auf Norderney Fahrrad leihen.",
+    "title2": "Auf Norderney Fahrrad fahren.",
     "subtitle": "E-Bikes, Cityräder, E-Lastenräder und Kinderfahrräder. Einfache Online-Buchung, lokale Abholung — bereit wenn du es bist.",
     "browseBikes": "Alle Fahrräder",
     "howItWorks": "So funktioniert es",
-    "pill1": "4.9 Google Bewertungen",
+    "pill1": "4.6 Google Bewertungen",
     "pill2": "Sichere Buchung",
     "pill3": "Kostenlose Stornierung",
     "pill4": "Lokale Abholung"
   },
   "trustBar": {
-    "rating": "4.9 Google Bewertung",
+    "rating": "4.6 Google Bewertung",
     "ratingSub": "150+ Bewertungen",
     "secure": "Sichere Buchung",
     "secureSub": "Powered by Mietrad",
@@ -82,13 +82,13 @@
     "feat3Desc": "Ruf uns an oder schreib uns jederzeit. Echte Menschen, schnelle Antworten — auf Deutsch und Englisch.",
     "feat4Title": "Alles inklusive",
     "feat4Desc": "Helm, Schloss und Flickzeug sind bei jeder Vermietung inklusive. Keine versteckten Extras bei der Abholung.",
-    "feat5Title": "4.9 Sterne bei Google",
+    "feat5Title": "4.6 Sterne bei Google",
     "feat5Desc": "Über 150 verifizierte Bewertungen von echten Kunden. Vertrauen durch jahrelangen Service.",
     "feat6Title": "Flexible Mietdauer",
     "feat6Desc": "Ganzer Tag, mehrtägig oder wöchentlich. Wir passen uns deinem Zeitplan an."
   },
   "reviews": {
-    "title": "4.9 / 5 — Was unsere Kunden sagen",
+    "title": "4.6 / 5 — Was unsere Kunden sagen",
     "subtitle": "150+ verifizierte Google-Bewertungen von echten Fahrern.",
     "seeAll": "Alle Google-Bewertungen ansehen"
   },

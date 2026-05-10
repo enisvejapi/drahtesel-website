@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback, useRef, Suspense, Component } from 'react'
 import type { ReactNode } from 'react'
 import dynamic from 'next/dynamic'
-import { Map, X, Route, ChevronRight, Bike, Clock, Maximize2, Minimize2 } from 'lucide-react'
+import { Map, X, Route, ChevronRight, Bike, Clock, Maximize2, Minimize2, List } from 'lucide-react'
 import { useLocale } from '@/components/LocaleProvider'
-import { DEFAULT_PINS } from '@/lib/interest-pins'
+import { DEFAULT_PINS, PIN_CATEGORIES } from '@/lib/interest-pins'
 import type { InterestPin } from '@/lib/interest-pins'
 import type { ActiveRoute, RouteStep } from '@/components/explore/ExploreMap'
 import StartLocationModal from '@/components/tours/v2/StartLocationModal'
@@ -79,20 +79,23 @@ function valhallaManeuver(type: number): { type: string; modifier: string } {
 // ── Valhalla cycling route — routes through all bike paths incl. footways ────
 async function fetchCyclingRoute(
   from: { lat: number; lng: number },
-  to: { lat: number; lng: number }
+  to: { lat: number; lng: number },
+  waypoints?: [number, number][]
 ): Promise<ActiveRoute> {
   const body = {
     locations: [
-      { lat: from.lat, lon: from.lng },
-      { lat: to.lat,   lon: to.lng   },
+      { lat: from.lat, lon: from.lng, type: 'break' },
+      ...(waypoints ?? []).map(([lat, lng]) => ({ lat, lon: lng, type: 'through' })),
+      { lat: to.lat,   lon: to.lng,   type: 'break' },
     ],
     costing: 'bicycle',
     costing_options: {
       bicycle: {
-        bicycle_type: 'Cross', // routes through paths, gravel, cycleways
-        use_roads: 0.3,        // prefer paths over roads
+        bicycle_type: 'Mountain', // accepts all surfaces incl. gravel/tracks
+        use_roads: 0.0,           // strongly avoid roads, always pick bike paths first
         use_hills: 0.2,
         use_ferry: 0,
+        avoid_bad_surfaces: 0.1,  // willing to use rough paths to stay off roads
       },
     },
     units: 'km',
@@ -115,24 +118,31 @@ async function fetchCyclingRoute(
   const data = await res.json()
   if (!data.trip?.legs?.length) throw new Error('No cycling route found')
 
-  const leg = data.trip.legs[0]
-  const coords = decodePolyline(leg.shape)
+  // Merge all legs (when waypoints are used, Valhalla may return multiple legs)
+  const allCoords: [number, number][] = []
+  const steps: RouteStep[] = []
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const steps: RouteStep[] = (leg.maneuvers ?? []).map((m: any) => {
-    const { type, modifier } = valhallaManeuver(m.type)
-    return {
-      type,
-      modifier,
-      distance: (m.length ?? 0) * 1000,   // km → m
-      duration: m.time ?? 0,
-      name: (m.street_names ?? []).join(', '),
-      maneuverLocation: coords[m.begin_shape_index ?? 0] ?? [from.lat, from.lng],
+  for (const leg of data.trip.legs) {
+    const coords = decodePolyline(leg.shape)
+    const legOffset = allCoords.length
+    allCoords.push(...coords)
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    for (const m of (leg.maneuvers ?? []) as any[]) {
+      const { type, modifier } = valhallaManeuver(m.type)
+      steps.push({
+        type,
+        modifier,
+        distance: (m.length ?? 0) * 1000,
+        duration: m.time ?? 0,
+        name: (m.street_names ?? []).join(', '),
+        maneuverLocation: allCoords[legOffset + (m.begin_shape_index ?? 0)] ?? [from.lat, from.lng],
+      })
     }
-  })
+  }
 
   return {
-    coords,
+    coords: allCoords,
     distance: (data.trip.summary.length ?? 0) * 1000,  // km → m
     duration: data.trip.summary.time ?? 0,
     steps,
@@ -209,10 +219,11 @@ function ExploreApp() {
   const [plannerStart, setPlannerStart] = useState<[number, number] | null>(null)
   const [plannerEnd, setPlannerEnd] = useState<[number, number] | null>(null)
   const [showRoutePanel, setShowRoutePanel] = useState(false)
+  const [showPinList, setShowPinList] = useState(false)
   const [predefinedRoutes, setPredefinedRoutes] = useState<{
     id: string; name: {de:string;en:string}; description: {de:string;en:string};
     distance: string; duration: string; difficulty: string; emoji: string;
-    start: [number,number]; end: [number,number]
+    end: [number,number]; waypoints?: [number,number][]
   }[]>([])
 
   // Keep refs in sync with state (avoid stale closures in GPS callback)
@@ -272,8 +283,12 @@ function ExploreApp() {
 
   // ── Load a predefined route ────────────────────────────────────────────────
   const handleLoadPredefined = useCallback(async (route: typeof predefinedRoutes[0]) => {
+    if (!userPos) {
+      setRouteError(de ? 'GPS-Standort wird benötigt. Bitte Standortzugriff erlauben.' : 'GPS location required. Please allow location access.')
+      return
+    }
     setShowRoutePanel(false)
-    setPlannerStart(route.start)
+    setPlannerStart([userPos.lat, userPos.lng])
     setPlannerEnd(route.end)
     setActiveRoute(null)
     setRouteLoading(true)
@@ -289,15 +304,16 @@ function ExploreApp() {
     setSelectedPin(destPin)
     try {
       const r = await fetchCyclingRoute(
-        { lat: route.start[0], lng: route.start[1] },
-        { lat: route.end[0], lng: route.end[1] }
+        { lat: userPos.lat, lng: userPos.lng },
+        { lat: route.end[0], lng: route.end[1] },
+        route.waypoints ?? []
       )
       setActiveRoute(r)
     } catch {
       setRouteError(de ? 'Route konnte nicht geladen werden.' : 'Could not load route.')
     }
     setRouteLoading(false)
-  }, [de, predefinedRoutes])
+  }, [de, userPos])
 
   const handleCancelPlanner = useCallback(() => {
     setPlannerMode('idle')
@@ -333,11 +349,17 @@ function ExploreApp() {
   }, [])
 
   const handleGetRoute = useCallback(async () => {
-    if (!selectedPin || !startLocation) return
+    if (!selectedPin) return
+    // Use startLocation if set, fall back to live GPS, otherwise prompt the user
+    const from = startLocation ?? (userPos ? { lat: userPos.lat, lng: userPos.lng } : null)
+    if (!from) {
+      setShowModal(true)
+      return
+    }
     setRouteLoading(true)
     setRouteError(null)
     try {
-      const route = await fetchCyclingRoute(startLocation, { lat: selectedPin.lat, lng: selectedPin.lng })
+      const route = await fetchCyclingRoute(from, { lat: selectedPin.lat, lng: selectedPin.lng })
       setActiveRoute(route)
     } catch {
       setRouteError(
@@ -347,7 +369,7 @@ function ExploreApp() {
       )
     }
     setRouteLoading(false)
-  }, [selectedPin, startLocation, de])
+  }, [selectedPin, startLocation, userPos, de])
 
   const handleClearRoute = useCallback(() => {
     setActiveRoute(null)
@@ -428,8 +450,8 @@ function ExploreApp() {
 
   return (
     <div
-      className="relative w-full overflow-hidden"
-      style={{ height: '100dvh', background: '#0a0a0a', overscrollBehavior: 'none' }}
+      className="overflow-hidden"
+      style={{ position: 'fixed', inset: 0, zIndex: 100, background: '#0a0a0a', overscrollBehavior: 'none' }}
     >
       {/* Map */}
       <ExploreMap
@@ -473,6 +495,16 @@ function ExploreApp() {
 
           {/* Spacer on mobile only */}
           <div className="flex-1 sm:hidden pointer-events-none" />
+
+          {/* Pin list button */}
+          <div className="pointer-events-auto">
+            <button
+              onClick={() => setShowPinList(true)}
+              className="h-10 w-10 bg-white/95 backdrop-blur rounded-xl shadow-md flex items-center justify-center text-brand-gray hover:text-brand-black transition-colors"
+            >
+              <List size={15} className="text-brand-red" />
+            </button>
+          </div>
 
           {/* Route planner button */}
           <div className="pointer-events-auto">
@@ -641,6 +673,52 @@ function ExploreApp() {
         />
       )}
 
+      {/* Pin list panel */}
+      {showPinList && (
+        <div className="absolute inset-0 z-[1200] flex flex-col justify-end" onClick={() => setShowPinList(false)}>
+          <div
+            className="bg-white rounded-t-3xl shadow-2xl overflow-hidden max-h-[75vh] flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
+              <div className="w-10 h-1 bg-gray-200 rounded-full" />
+            </div>
+            <div className="flex items-center justify-between px-5 pt-2 pb-3 flex-shrink-0">
+              <h2 className="text-lg font-extrabold text-gray-900">{de ? 'Alle Orte' : 'All Places'}</h2>
+              <button onClick={() => setShowPinList(false)} className="w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-200 transition-colors">
+                <X size={16} />
+              </button>
+            </div>
+            <div className="overflow-y-auto flex-1 px-4 pb-6 space-y-2">
+              {pins.map(pin => {
+                const cat = PIN_CATEGORIES[pin.category]
+                return (
+                  <button
+                    key={pin.id}
+                    onClick={() => { handlePinSelect(pin); setShowPinList(false) }}
+                    className="w-full flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl p-3.5 hover:bg-gray-100 transition-colors text-left active:scale-[0.98]"
+                  >
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                      style={{ backgroundColor: `${cat.color}18` }}>
+                      {cat.image
+                        // eslint-disable-next-line @next/next/no-img-element
+                        ? <img src={cat.image} alt="" className="w-7 h-7 object-contain" />
+                        : <span style={{ color: cat.color, fontSize: 20 }}>{cat.emoji}</span>
+                      }
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm text-gray-900 truncate">{de ? pin.title.de : pin.title.en}</p>
+                      <p className="text-xs font-medium mt-0.5" style={{ color: cat.color }}>{de ? cat.label.de : cat.label.en}</p>
+                    </div>
+                    <ChevronRight size={16} className="text-gray-300 flex-shrink-0" />
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Route panel — custom planner + predefined routes */}
       {showRoutePanel && (
         <div className="absolute inset-0 z-[1200] flex flex-col justify-end" onClick={() => setShowRoutePanel(false)}>
@@ -685,8 +763,12 @@ function ExploreApp() {
                     onClick={() => handleLoadPredefined(r)}
                     className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:bg-gray-100 transition-colors active:scale-[0.98] text-left w-full"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">
-                      {r.emoji}
+                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
+                      {r.emoji.startsWith('/')
+                        // eslint-disable-next-line @next/next/no-img-element
+                        ? <img src={r.emoji} alt="" className="w-8 h-8 object-contain" />
+                        : <span className="text-2xl">{r.emoji}</span>
+                      }
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-extrabold text-sm text-gray-900">{de ? r.name.de : r.name.en}</p>

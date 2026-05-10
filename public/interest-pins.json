@@ -1,1 +1,306 @@
-[]
+[
+  {
+    "id": "leuchtturm",
+    "title": {
+      "de": "Leuchtturm Norderney",
+      "en": "Norderney Lighthouse"
+    },
+    "description": {
+      "de": "Der ikonische Leuchtturm aus dem Jahr 1874 im Osten der Insel. Mit 55 Metern Höhe bietet er einen atemberaubenden Blick über die gesamte Insel und das Wattenmeer.",
+      "en": "The iconic 1874 lighthouse at the eastern tip of the island. At 55 meters tall it offers a breathtaking view over the entire island and the Wadden Sea."
+    },
+    "tip": {
+      "de": "Früh morgens fahren — kaum Touristen, goldenes Licht. Perfekt mit dem E-Bike.",
+      "en": "Go early morning — barely any tourists, golden light. Perfect by e-bike."
+    },
+    "category": "history",
+    "lat": 53.70923573387574,
+    "lng": 7.229638248682023,
+    "images": []
+  },
+  {
+    "id": "ff61dbfe-f5de-4043-91c1-0cc4306ef46f",
+    "title": {
+      "de": "KURPALAIS ",
+      "en": ""
+    },
+    "description": {
+      "de": "Willkommen im Kurpalais auf Norderney 🚴☕🍰\n\nDas Kurpalais ist seit 2008 ein beliebter Treffpunkt im Herzen der Insel. Gäste können hier leckeren Kuchen, guten Kaffee und verschiedene Speisen in entspannter Atmosphäre genießen.\nDirekt neben dem Kurpalais befinden sich außerdem das bekannte Conversationshaus, die Touristeninformation sowie die Bibliothek.\n",
+      "en": ""
+    },
+    "tip": {
+      "de": "Ein perfekter Ort für eine kleine Pause während einer Fahrradtour oder eines Spaziergangs durch das Zentrum von Norderney.",
+      "en": ""
+    },
+    "category": "kurpalais",
+    "lat": 53.704417229720754,
+    "lng": 7.145382016897202,
+    "images": []
+  },
+  {
+    "id": "605562b0-1f6e-4851-b34d-b48c3f4132be",
+    "title": {
+      "de": "Kurtheater Norderney",
+      "en": ""
+    },
+    "description": {
+      "de": "Das Kurtheater Norderney befindet sich am nördlichen Rand des Kurplatzes im Ortszentrum der Nordseeinsel Norderney. Das im Stil eines kleinen Residenztheaters nach dem Vorbild des Opernhauses in Hannover gestaltete Kurtheater wurde 1894 eröffnet und ist damit eines der ältesten Theater in Ostfriesland. Es wurde in den 1920er-Jahren von der Stadt Norderney übernommen und dient seit den 1950er-Jahren als Spielstätte der Landesbühne Niedersachsen Nord (LBNN). Seit 1923 wird das Haus auch als Kino genutzt, das sich einen Namen unter anderem als Veranstaltungsort des Internationalen Filmfestes Emden-Norderney gemacht hat. 1987 wurde das Gebäude unter Denkmalschutz gestellt. Im Oktober 2019 wurden Risse im Mauerwerk des Gebäudes festgestellt. Das Haus wurde daraufhin zur Sicherheit geschlossen.[1] Die Sanierungsarbeiten dauerten bis zum Herbst 2021.[2]",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "theater",
+    "lat": 53.70571915344994,
+    "lng": 7.14650183916092,
+    "images": []
+  },
+  {
+    "id": "22223ae1-8945-4121-84c9-1144385b489d",
+    "title": {
+      "de": "bade:haus Norderney",
+      "en": ""
+    },
+    "description": {
+      "de": "Thalasso hat ein Zuhause im bade:haus Norderney\nWillkommen im bade:haus Norderney.\nTauchen Sie ein in die heilende Kraft des Meeres auf drei einzigartigen Ebenen und entfliehen Sie dem Alltag im größten Thalassohaus Europas.\nIm außergewöhnlichen Spa-Bereich des Badehaus Norderney erleben Sie die Elemente Feuer und Wasser auf eine völlig neue und revitalisierende Art und Weise. \nJetzt Tickets für Ihren erholsamen Aufenthalt im bade:haus Norderney buchen und unsere umfangreichen Wohlfühlangebote entdecken!\n\n",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "landmark",
+    "lat": 53.70431243898616,
+    "lng": 7.143997997045518,
+    "images": []
+  },
+  {
+    "id": "9f954177-1a27-46f4-9a3f-dacbb61c644f",
+    "title": {
+      "de": "Kaiser-Wilhelm-Denkmal",
+      "en": ""
+    },
+    "description": {
+      "de": "Das Kaiser-Wilhelm-Denkmal (im Volksmund auch Klamottendenkmal genannt[1][2]) auf der ostfriesischen Insel Norderney ist ein 13 m hoher Obelisk, der zur Erinnerung an die Reichseinigung von 1871 und an die Person Kaiser Wilhelms I. (1797–1888) zwischen 1898 und 1899 errichtet wurde.[3]\n\nLage\nDas Denkmal befindet sich in der Stadt Norderney an der Kreuzung von Bismarckstraße, Friedrichstraße, Herrenpfad und Knyphausenstraße auf einem Platz vor der katholischen Kirche St. Ludgerus.[4] Seit dem 31. August 1899 wurde die Bezeichnung „Kaiser-Wilhelm-Platz“ verwendet. In der Zeit von 1939 bis 1946 wurde die Bezeichnung gelöscht, der Platz ist heute namenlos.\n\nEin erster Entwurf sah vor, den Obelisken an der Promenade am Ende der Bismarckstraße aufzustellen, dieser Plan wurde verworfen.[5]",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "history",
+    "lat": 53.708508627578595,
+    "lng": 7.144775837659837,
+    "images": []
+  },
+  {
+    "id": "4de31b01-9309-482d-90ec-929d92228a7b",
+    "title": {
+      "de": " Fischerhausmuseum Norderneyer",
+      "en": ""
+    },
+    "description": {
+      "de": "Das Norderneyer Fischerhausmuseum liegt im Argonner Wäldchen südlich des Conversationshauses und dem Weststrand auf der Nordseeinsel Norderney. Der Heimatverein Norderney betreut und betreibt das Museum und das Teehuus. Es besteht seit 1937 und ist in einem Nachbau eines alten Norderneyer Fischerhauses aus dem 19. Jahrhundert untergebracht.\n\nAusstellung\nSchwerpunkte der Sammlung sind die Geschichte des ältesten deutschen Seebades an der Nordseeküste und die karge Lebensweise der ersten Inselbewohner. Zahlreiche Exponate und Dokumente informieren über das Alltagsleben auf Norderney, über Sitten und Gebräuche sowie über die Norderneyer Seefahrertradition und den Fischfang.\n\n\nDas Standesamt\nAngeschlossen ist das Alte Schießhaus (Weststrandstraße 3) der Seebadeanstalt Norderney. In diesem Gebäude war das städtische Bauamt untergebracht und steht unter Denkmalschutz. Es wird als Hochtiedsstuv (Standesamt)[1] genutzt. Es bietet Platz für bis zu 25 Personen.[2]",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "history",
+    "lat": 53.7029691891868,
+    "lng": 7.144036889076234,
+    "images": []
+  },
+  {
+    "id": "a044fc48-814b-42f7-8654-14ab2eb97fea",
+    "title": {
+      "de": "Museum Nordseeheilbad",
+      "en": ""
+    },
+    "description": {
+      "de": "Das Museum Nordseeheilbad Norderney (auch als bade~museum bekannt) ist der zentrale Ort, um in die über 200-jährige Geschichte des ältesten deutschen Nordseeheilbades einzutauchen. Es befindet sich im markanten Gebäude des ehemaligen Meerwasserfreibads am Weststrand",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "history",
+    "lat": 53.70178150471425,
+    "lng": 7.14387595653534,
+    "images": []
+  },
+  {
+    "id": "00d1aea1-1afa-4a10-9dbf-5e9f44ea632e",
+    "title": {
+      "de": "Thalassoplattform am Zuckerpad",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "landmark",
+    "lat": 53.71483942845926,
+    "lng": 7.161628156900406,
+    "images": []
+  },
+  {
+    "id": "8fb4f33b-94cc-4f66-a48c-79b206433658",
+    "title": {
+      "de": "Oasse oder FKK-Strandsauna",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "nature",
+    "lat": 53.72098993352902,
+    "lng": 7.238938808441163,
+    "images": []
+  },
+  {
+    "id": "82c5c368-2f70-416c-91e8-0af7c7f46b60",
+    "title": {
+      "de": "Aussichtplattform \"Weiße Düne\"",
+      "en": ""
+    },
+    "description": {
+      "de": "Das Zuckerpäckchen fehlt.",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "nature",
+    "lat": 53.71917423927634,
+    "lng": 7.19520002603531,
+    "images": []
+  },
+  {
+    "id": "1c9b63a1-adab-430f-9988-32dcd9a2ca30",
+    "title": {
+      "de": "polder-Wattweg",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "landmark",
+    "lat": 53.71164398530307,
+    "lng": 7.260514497756959,
+    "images": []
+  },
+  {
+    "id": "91ad0b13-5edd-4cde-be59-577ff33db879",
+    "title": {
+      "de": "Weststrand",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "beach",
+    "lat": 53.70093041608157,
+    "lng": 7.143422663211823,
+    "images": []
+  },
+  {
+    "id": "36ab30e4-db24-47b4-889f-b02db322dcfd",
+    "title": {
+      "de": "Flugplatz Norderney",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "viewpoint",
+    "lat": 53.706868623357494,
+    "lng": 7.229905128479005,
+    "images": []
+  },
+  {
+    "id": "e91963fb-38dc-4693-8f04-e6dc024069aa",
+    "title": {
+      "de": "Weisse Düne",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "food",
+    "lat": 53.719453581955825,
+    "lng": 7.2057947516441345,
+    "images": []
+  },
+  {
+    "id": "92522819-7ffb-469e-b621-d5fd3027b779",
+    "title": {
+      "de": "Roof Top-Bar \"NewWave\"",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "food",
+    "lat": 53.70641614240381,
+    "lng": 7.140481621026994,
+    "images": []
+  },
+  {
+    "id": "6bb3f386-b610-4475-b692-41caab354368",
+    "title": {
+      "de": "Due Fratelli Norderney – Italienische Pizzeria",
+      "en": ""
+    },
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "tip": {
+      "de": "",
+      "en": ""
+    },
+    "category": "duefratelli",
+    "lat": 53.707856126295695,
+    "lng": 7.1467311680316925,
+    "images": []
+  }
+]

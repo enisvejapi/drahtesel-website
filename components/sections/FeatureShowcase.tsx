@@ -61,9 +61,9 @@ function NavMockup() {
 // ── Phone mockup: Bike Rental ────────────────────────────────────────────────
 function BikeMockup() {
   const bikes = [
-    { emoji:'🚲', name:'City Bike',      price:'12 €', tag:'Beliebt' },
-    { emoji:'⚡', name:'E-Bike Premium', price:'22 €', tag:'Neu'     },
-    { emoji:'👨‍👩‍👧', name:'Lastenrad',     price:'28 €', tag:'Familie' },
+    { emoji:'🚲', name:'City Bike',      price:'9 €',  tag:'Beliebt' },
+    { emoji:'⚡', name:'E-Bike Premium', price:'25 €', tag:'Neu'     },
+    { emoji:'👨‍👩‍👧', name:'Lastenrad',     price:'30 €', tag:'Familie' },
   ]
   const [active, setActive] = useState(0)
   useEffect(() => {

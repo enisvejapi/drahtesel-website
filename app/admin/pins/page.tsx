@@ -1,11 +1,14 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { Plus, Trash2, MapPin, Save, X, Loader2, Upload, Image as ImageIcon } from 'lucide-react'
+import { Plus, Trash2, MapPin, Save, X, Loader2, Upload, Image as ImageIcon, Languages } from 'lucide-react'
 import type { InterestPin, PinCategory } from '@/lib/interest-pins'
 import { PIN_CATEGORIES, DEFAULT_PINS } from '@/lib/interest-pins'
+import CategoryIcon from '@/components/CategoryIcon'
 
-const CATEGORIES = Object.entries(PIN_CATEGORIES) as [PinCategory, typeof PIN_CATEGORIES[PinCategory]][]
+const ALL_CATEGORIES = Object.entries(PIN_CATEGORIES) as [PinCategory, typeof PIN_CATEGORIES[PinCategory]][]
+const CATEGORIES         = ALL_CATEGORIES.filter(([, cat]) => !cat.image)
+const IMAGE_CATEGORIES   = ALL_CATEGORIES.filter(([, cat]) => !!cat.image)
 
 const EMPTY: Omit<InterestPin, 'id'> = {
   title: { de: '', en: '' },
@@ -26,6 +29,7 @@ export default function AdminPinsPage() {
   const [deleting, setDeleting] = useState<string | null>(null)
   const [uploadingMain, setUploadingMain] = useState(false)
   const [uploadingSub, setUploadingSub] = useState(false)
+  const [translating, setTranslating] = useState(false)
   const mapRef = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const leafletMapRef = useRef<any>(null)
@@ -159,6 +163,34 @@ export default function AdminPinsPage() {
     setDeleting(null)
   }
 
+  async function translatePinToEn() {
+    if (!editing) return
+    setTranslating(true)
+    try {
+      async function tr(text: string) {
+        if (!text.trim()) return ''
+        const res = await fetch(
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=de|en`
+        )
+        const data = await res.json()
+        return data.responseData?.translatedText ?? ''
+      }
+      const [titleEn, descEn, tipEn] = await Promise.all([
+        tr(editing.title.de),
+        tr(editing.description.de),
+        tr(editing.tip.de),
+      ])
+      setEditing(prev => prev ? {
+        ...prev,
+        title: { ...prev.title, en: titleEn },
+        description: { ...prev.description, en: descEn },
+        tip: { ...prev.tip, en: tipEn },
+      } : prev)
+    } finally {
+      setTranslating(false)
+    }
+  }
+
   function cancelEdit() {
     setEditing(null)
     if (leafletMapRef.current) { leafletMapRef.current.remove(); leafletMapRef.current = null }
@@ -264,19 +296,36 @@ export default function AdminPinsPage() {
               </div>
             </div>
 
-            {/* Text fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Text fields — DE */}
+            <div className="space-y-4">
               <Field label="Titel (DE)"><input value={editing.title.de} onChange={e => setEditing({ ...editing, title: { ...editing.title, de: e.target.value } })} className={inp} /></Field>
-              <Field label="Title (EN)"><input value={editing.title.en} onChange={e => setEditing({ ...editing, title: { ...editing.title, en: e.target.value } })} className={inp} /></Field>
               <Field label="Beschreibung (DE)"><textarea rows={3} value={editing.description.de} onChange={e => setEditing({ ...editing, description: { ...editing.description, de: e.target.value } })} className={`${inp} resize-none`} /></Field>
-              <Field label="Description (EN)"><textarea rows={3} value={editing.description.en} onChange={e => setEditing({ ...editing, description: { ...editing.description, en: e.target.value } })} className={`${inp} resize-none`} /></Field>
               <Field label="Tipp (DE)"><input value={editing.tip.de} onChange={e => setEditing({ ...editing, tip: { ...editing.tip, de: e.target.value } })} className={inp} /></Field>
+            </div>
+
+            {/* Auto-translate button */}
+            <button
+              type="button"
+              onClick={translatePinToEn}
+              disabled={translating || (!editing.title.de && !editing.description.de && !editing.tip.de)}
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border-2 border-dashed border-gray-200 text-xs font-bold text-gray-500 hover:border-brand-red hover:text-brand-red transition-colors disabled:opacity-40"
+            >
+              {translating
+                ? <><div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" /> Übersetze…</>
+                : <><Languages size={14} /> Automatisch auf Englisch übersetzen</>
+              }
+            </button>
+
+            {/* Text fields — EN (auto-filled, editable) */}
+            <div className="space-y-4">
+              <Field label="Title (EN)"><input value={editing.title.en} onChange={e => setEditing({ ...editing, title: { ...editing.title, en: e.target.value } })} className={inp} /></Field>
+              <Field label="Description (EN)"><textarea rows={3} value={editing.description.en} onChange={e => setEditing({ ...editing, description: { ...editing.description, en: e.target.value } })} className={`${inp} resize-none`} /></Field>
               <Field label="Tip (EN)"><input value={editing.tip.en} onChange={e => setEditing({ ...editing, tip: { ...editing.tip, en: e.target.value } })} className={inp} /></Field>
             </div>
 
             {/* Category */}
             <Field label="Kategorie">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-2">
                 {CATEGORIES.map(([key, cat]) => (
                   <button
                     key={key}
@@ -287,7 +336,24 @@ export default function AdminPinsPage() {
                       : { borderColor: '#e5e7eb', color: '#6b7280' }
                     }
                   >
-                    {cat.emoji} {cat.label.de}
+                    <CategoryIcon category={key} size={14} color={editing.category === key ? cat.color : '#6b7280'} />
+                    {cat.label.de}
+                  </button>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {IMAGE_CATEGORIES.map(([key, cat]) => (
+                  <button
+                    key={key}
+                    onClick={() => setEditing({ ...editing, category: key })}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold border-2 transition-all"
+                    style={editing.category === key
+                      ? { borderColor: cat.color, backgroundColor: `${cat.color}15`, color: cat.color }
+                      : { borderColor: '#e5e7eb', color: '#6b7280' }
+                    }
+                  >
+                    <CategoryIcon category={key} size={14} />
+                    {cat.label.de}
                   </button>
                 ))}
               </div>
@@ -337,8 +403,8 @@ export default function AdminPinsPage() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={pin.image} alt={pin.title.de} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)` }}>
-                      {cat.emoji}
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)` }}>
+                      <CategoryIcon category={pin.category} size={40} color={cat.color} />
                     </div>
                   )}
                   <div className="absolute bottom-2 left-2">

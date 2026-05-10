@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { join } from 'path'
 
-const FILE = join(process.cwd(), 'data', 'predefined-routes.json')
+const DIR  = join(process.cwd(), 'data')
+const FILE = join(DIR, 'predefined-routes.json')
 
 function read() {
+  if (!existsSync(FILE)) return []
   return JSON.parse(readFileSync(FILE, 'utf-8'))
 }
 function write(data: unknown) {
+  if (!existsSync(DIR)) mkdirSync(DIR, { recursive: true })
   writeFileSync(FILE, JSON.stringify(data, null, 2))
 }
 
@@ -27,8 +30,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       duration:    body.duration  || routes[idx].duration,
       difficulty:  body.difficulty || routes[idx].difficulty,
       emoji:       body.emoji     || routes[idx].emoji,
-      start: [parseFloat(body.startLat), parseFloat(body.startLng)],
-      end:   [parseFloat(body.endLat),   parseFloat(body.endLng)  ],
+      end:       [parseFloat(body.endLat), parseFloat(body.endLng)],
+      waypoints: Array.isArray(body.waypoints) ? body.waypoints : (routes[idx].waypoints ?? []),
     }
     write(routes)
     return NextResponse.json(routes[idx])

@@ -11,7 +11,7 @@ export default function AboutPage() {
   const stats = [
     { value: '2018', label: de ? 'Gegründet' : 'Founded' },
     { value: '30+', label: de ? 'Fahrräder' : 'Bikes in fleet' },
-    { value: '4.9★', label: de ? 'Google Bewertung' : 'Google rating' },
+    { value: '4.6★', label: de ? 'Google Bewertung' : 'Google rating' },
     { value: '1500+', label: de ? 'Zufriedene Mieter' : 'Happy renters' },
   ]
 

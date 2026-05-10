@@ -3,6 +3,7 @@
 import { X, Clock, Bike, Navigation2 } from 'lucide-react'
 import type { InterestPin } from '@/lib/interest-pins'
 import { PIN_CATEGORIES } from '@/lib/interest-pins'
+import CategoryIcon from '@/components/CategoryIcon'
 import type { ActiveRoute } from './ExploreMap'
 
 interface Props {
@@ -38,12 +39,12 @@ export default function RouteBar({ pin, route, locale, onClear, onStartNavigatio
         <div className="h-1" style={{ backgroundColor: cat.color }} />
 
         <div className="flex items-center gap-3 px-4 py-3">
-          {/* Category emoji */}
+          {/* Category icon */}
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
             style={{ backgroundColor: `${cat.color}18` }}
           >
-            {cat.emoji}
+            <CategoryIcon category={pin.category} size={18} color={cat.color} />
           </div>
 
           {/* Info */}

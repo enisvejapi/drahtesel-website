@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: 'Drahtesel — Bike Rental',
   description: 'Rent a bike easily. City bikes, e-bikes, mountain bikes and more. Simple online booking, local pickup.',
   keywords: 'bike rental, fahrrad leihen, e-bike rental, city bike, Drahtesel',
+  icons: {
+    icon: '/icon.jpg',
+    shortcut: '/icon.jpg',
+    apple: '/icon.jpg',
+  },
   openGraph: {
     title: 'Drahtesel — Bike Rental',
     description: 'Rent a bike easily. City bikes, e-bikes, mountain bikes and more.',

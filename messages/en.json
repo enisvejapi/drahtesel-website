@@ -10,19 +10,19 @@
     "bookBike": "Book a Bike"
   },
   "hero": {
-    "badge": "4.9 ★ — Top Rated Bike Rental",
+    "badge": "4.6 ★ — Top Rated Bike Rental",
     "title1": "Rent a Bike.",
     "title2": "Rent Bikes on Norderney Island.",
     "subtitle": "E-bikes, city bikes, electric cargo bikes and kids bikes. Easy online booking, local pickup — ready when you are.",
     "browseBikes": "Browse All Bikes",
     "howItWorks": "How It Works",
-    "pill1": "4.9 Google Reviews",
+    "pill1": "4.6 Google Reviews",
     "pill2": "Secure Booking",
     "pill3": "Free Cancellation",
     "pill4": "Local Pickup"
   },
   "trustBar": {
-    "rating": "4.9 Google Rating",
+    "rating": "4.6 Google Rating",
     "ratingSub": "150+ reviews",
     "secure": "Secure Booking",
     "secureSub": "Powered by Mietrad",
@@ -82,13 +82,13 @@
     "feat3Desc": "Call or message us anytime. Real people, fast responses — in German and English.",
     "feat4Title": "Everything Included",
     "feat4Desc": "Helmet, lock, and repair kit included with every rental. No surprise extras at pickup.",
-    "feat5Title": "4.9 Stars on Google",
+    "feat5Title": "4.6 Stars on Google",
     "feat5Desc": "Over 150 verified reviews from real customers. Trust built over years of service.",
     "feat6Title": "Flexible Durations",
     "feat6Desc": "Full day, multi-day, or weekly. We work around your schedule."
   },
   "reviews": {
-    "title": "4.9 / 5 — What Our Customers Say",
+    "title": "4.6 / 5 — What Our Customers Say",
     "subtitle": "150+ verified Google reviews from real riders.",
     "seeAll": "See all reviews on Google"
   },
