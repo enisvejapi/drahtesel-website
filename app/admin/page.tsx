@@ -2,9 +2,9 @@ import { readReviews, readFaqs } from '@/lib/data-server'
 import { Star, HelpCircle, ExternalLink, MessageSquare, Settings, MapPin, KeyRound, Route } from 'lucide-react'
 import Link from 'next/link'
 
-export default function AdminDashboard() {
-  const reviews = readReviews()
-  const faqs = readFaqs()
+export default async function AdminDashboard() {
+  const reviews = await readReviews()
+  const faqs = await readFaqs()
 
   const stats = [
     { label: 'Bewertungen', value: reviews.length, icon: Star, color: 'bg-yellow-500', href: '/admin/reviews' },

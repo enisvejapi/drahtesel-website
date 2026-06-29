@@ -30,9 +30,9 @@ export default function Footer() {
       { label: t('footer.contact'), href: '/contact' },
     ],
     [t('footer.legal')]: [
-      { label: t('footer.privacy'), href: '/privacy' },
-      { label: t('footer.terms'), href: '/terms' },
-      { label: t('footer.imprint'), href: '/imprint' },
+      { label: t('footer.privacy'), href: '/datenschutz' },
+      { label: t('footer.terms'), href: '/agb' },
+      { label: t('footer.imprint'), href: '/impressum' },
     ],
   }
 
@@ -64,10 +64,10 @@ export default function Footer() {
               </span>
             </div>
             <div className="flex items-center gap-3 mt-6">
-              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-brand-red flex items-center justify-center transition-colors">
+              <a href="https://www.instagram.com/drahtesel_ney" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-brand-red flex items-center justify-center transition-colors">
                 <Instagram size={16} />
               </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-brand-red flex items-center justify-center transition-colors">
+              <a href="https://www.facebook.com/share/18hf7CXx87/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-brand-red flex items-center justify-center transition-colors">
                 <Facebook size={16} />
               </a>
             </div>

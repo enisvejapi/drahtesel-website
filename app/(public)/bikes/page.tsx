@@ -17,7 +17,7 @@ export default function BikesPage() {
         </div>
       </div>
 
-      <div className="container-site py-10">
+      <div className="container-site py-10 pb-32">
         <MietradWidget />
       </div>
 

@@ -7,7 +7,7 @@ import { useLocale } from '@/components/LocaleProvider'
 
 // Static FAQs as fallback (bilingual)
 const DE_FAQS = [
-  { question: 'Was ist in jeder Miete enthalten?', answer: 'Jede Miete beinhaltet Helm, Schloss und Flickzeug. Je nach Fahrrad gibt es auch Korb, Satteltasche, Stadtplan oder Kinderhelme. Schau auf der jeweiligen Fahrradseite nach.' },
+  { question: 'Was ist in jeder Miete enthalten?', answer: 'Jede Miete beinhaltet Helm und Schloss. Je nach Fahrrad gibt es auch Korb, Satteltasche, Stadtplan oder Kinderhelme. Schau auf der jeweiligen Fahrradseite nach.' },
   { question: 'Kann ich meine Buchung stornieren?', answer: 'Ja. Kostenlose Stornierung bis 24 Stunden vor der Abholung. Stornierungen weniger als 24 Stunden vorher sind nicht erstattungsfähig.' },
   { question: 'Wird eine Kaution verlangt?', answer: 'Für Standard-Cityräder keine Kaution. Für E-Bikes und Lastenräder gilt eine rückerstattbare Kaution von 50–100 €.' },
   { question: 'Was passiert bei verspäteter Rückgabe?', answer: 'Bitte melde dich so früh wie möglich, wenn du dich verspätest. Späte Rückgaben werden anteilig stündlich berechnet.' },

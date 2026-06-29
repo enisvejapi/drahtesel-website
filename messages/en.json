@@ -231,6 +231,16 @@
     "deleting": "Deleting...",
     "language": "Language"
   },
+  "openingHours": {
+    "title": "Opening Hours",
+    "open": "Open",
+    "closed": "Closed",
+    "today": "Today",
+    "daily": "Daily",
+    "closedToday": "Closed today",
+    "specialOpen": "Special opening hours today",
+    "specialClosed": "Temporarily closed today"
+  },
   "lang": {
     "de": "Deutsch",
     "en": "English"

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 export async function GET() {
   try {
     await requireAdmin()
-    return NextResponse.json(readFaqs())
+    return NextResponse.json(await readFaqs())
   } catch { return unauthorizedResponse() }
 }
 
@@ -15,10 +15,10 @@ export async function POST(request: Request) {
   try {
     await requireAdmin()
     const body = await request.json()
-    const items = readFaqs()
+    const items = await readFaqs()
     const item = { ...body, id: uuidv4() }
     items.push(item)
-    writeFaqs(items)
+    await writeFaqs(items)
     revalidatePath('/how-it-works')
     return NextResponse.json(item, { status: 201 })
   } catch (err) {

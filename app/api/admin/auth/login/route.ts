@@ -24,11 +24,11 @@ export async function POST(request: Request) {
     // Rate limiting simulation — always delay slightly to deter brute force
     await new Promise((r) => setTimeout(r, 300))
 
-    const settings = readSettings()
+    const settings = await readSettings()
     let valid = false
 
     if (settings.passwordHash) {
-      // Check against hashed password stored in settings.json
+      // Check against hashed password stored in Supabase
       valid = await verifyPassword(password, settings.passwordHash)
     } else {
       // Fall back to env variable (plain text for initial setup)

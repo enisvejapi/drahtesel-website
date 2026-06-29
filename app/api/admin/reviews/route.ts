@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 export async function GET() {
   try {
     await requireAdmin()
-    return NextResponse.json(readReviews())
+    return NextResponse.json(await readReviews())
   } catch { return unauthorizedResponse() }
 }
 
@@ -15,10 +15,10 @@ export async function POST(request: Request) {
   try {
     await requireAdmin()
     const body = await request.json()
-    const reviews = readReviews()
+    const reviews = await readReviews()
     const item = { ...body, id: uuidv4() }
     reviews.push(item)
-    writeReviews(reviews)
+    await writeReviews(reviews)
     revalidatePath('/')
     return NextResponse.json(item, { status: 201 })
   } catch (err) {

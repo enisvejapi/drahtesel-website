@@ -1,26 +1,31 @@
-import { readFileSync, writeFileSync } from 'fs'
-import { join } from 'path'
 import { NextResponse } from 'next/server'
 import type { POI } from '@/lib/pois'
+import { supabase } from '@/lib/supabase'
 
-const POIS_FILE = join(process.cwd(), 'public', 'tour-pois.json')
-
-function readPOIs(): POI[] {
+async function readPOIs(): Promise<POI[]> {
   try {
-    return JSON.parse(readFileSync(POIS_FILE, 'utf-8'))
+    const { data, error } = await supabase
+      .from('kv_store')
+      .select('data')
+      .eq('key', 'tour_pois')
+      .single()
+    if (error || !data) return []
+    return data.data as POI[]
   } catch {
     return []
   }
 }
 
-function writePOIs(pois: POI[]) {
-  writeFileSync(POIS_FILE, JSON.stringify(pois, null, 2))
+async function writePOIs(pois: POI[]) {
+  await supabase
+    .from('kv_store')
+    .upsert({ key: 'tour_pois', data: pois, updated_at: new Date().toISOString() })
 }
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const tourId = searchParams.get('tourId')
-  const all = readPOIs()
+  const all = await readPOIs()
   return NextResponse.json(tourId ? all.filter(p => p.tourId === tourId) : all)
 }
 
@@ -33,15 +38,15 @@ export async function POST(req: Request) {
     ...body,
     id: Date.now().toString(36) + Math.random().toString(36).slice(2),
   }
-  const all = readPOIs()
+  const all = await readPOIs()
   all.push(poi)
-  writePOIs(all)
+  await writePOIs(all)
   return NextResponse.json(poi)
 }
 
 export async function DELETE(req: Request) {
   const { id } = await req.json()
-  const all = readPOIs().filter(p => p.id !== id)
-  writePOIs(all)
+  const all = (await readPOIs()).filter(p => p.id !== id)
+  await writePOIs(all)
   return NextResponse.json({ ok: true })
 }

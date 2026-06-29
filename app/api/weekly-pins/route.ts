@@ -1,23 +1,10 @@
 import { NextResponse } from 'next/server'
-import { readFileSync, writeFileSync } from 'fs'
-import { join } from 'path'
-
-const PINS_FILE = join(process.cwd(), 'data', 'weekly-pins.json')
-
-function readPins() {
-  try {
-    const raw = readFileSync(PINS_FILE, 'utf-8')
-    const parsed = JSON.parse(raw)
-    return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
-  }
-}
+import { readWeeklyPins, writeWeeklyPins } from '@/lib/data-server'
 
 // GET — return all pins (used by client to validate)
 export async function GET() {
   try {
-    return NextResponse.json(readPins(), {
+    return NextResponse.json(await readWeeklyPins(), {
       headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
     })
   } catch {
@@ -28,13 +15,13 @@ export async function GET() {
 // POST — regenerate all 52 weekly PINs (admin only)
 export async function POST() {
   try {
-    const existing = readPins()
+    const existing = await readWeeklyPins()
     // Keep existing start/end dates, just regenerate PINs
-    const regenerated = existing.map((entry: { week: number; startDate: string; endDate: string }) => ({
+    const regenerated = existing.map((entry) => ({
       ...entry,
       pin: String(Math.floor(Math.random() * 900) + 100),
     }))
-    writeFileSync(PINS_FILE, JSON.stringify(regenerated, null, 2))
+    await writeWeeklyPins(regenerated)
     return NextResponse.json(regenerated)
   } catch {
     return NextResponse.json({ error: 'Failed to regenerate' }, { status: 500 })

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   turbopack: {
     root: __dirname,
   },
@@ -8,6 +9,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'bqtyoujkaycqejoqahjj.supabase.co',
       },
     ],
   },

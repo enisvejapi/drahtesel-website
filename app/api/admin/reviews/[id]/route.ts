@@ -8,11 +8,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     await requireAdmin()
     const { id } = await params
     const body = await request.json()
-    const items = readReviews()
+    const items = await readReviews()
     const idx = items.findIndex((r) => r.id === id)
     if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     items[idx] = { ...items[idx], ...body, id }
-    writeReviews(items)
+    await writeReviews(items)
     revalidatePath('/')
     return NextResponse.json(items[idx])
   } catch (err) {
@@ -25,8 +25,8 @@ export async function DELETE(_: Request, { params }: { params: Promise<{ id: str
   try {
     await requireAdmin()
     const { id } = await params
-    const items = readReviews()
-    writeReviews(items.filter((r) => r.id !== id))
+    const items = await readReviews()
+    await writeReviews(items.filter((r) => r.id !== id))
     revalidatePath('/')
     return NextResponse.json({ ok: true })
   } catch (err) {

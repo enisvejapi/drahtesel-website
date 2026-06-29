@@ -8,7 +8,7 @@ import { useLocale } from '@/components/LocaleProvider'
 const FEATURED = [
   {
     id: 'city',
-    image: '/bikes/City-Bike.jpg',
+    image: '/bikes/City-Bike-new.jpg',
     badge: null,
     eBike: false,
     name: { de: 'City Bike', en: 'City Bike' },
@@ -16,7 +16,7 @@ const FEATURED = [
   },
   {
     id: 'ebike',
-    image: '/bikes/E-Bike-City.png',
+    image: '/bikes/E-Bike-City.jpg',
     badge: { de: 'Beliebt', en: 'Popular' },
     eBike: true,
     name: { de: 'E-Bike City', en: 'E-Bike City' },
@@ -24,7 +24,7 @@ const FEATURED = [
   },
   {
     id: 'lastenrad',
-    image: '/bikes/E-Lastenrad-CHIKE.jpg',
+    image: '/bikes/E-Lastenrad-CHIKE.webp',
     badge: null,
     eBike: true,
     name: { de: 'E-Lastenrad CHIKE', en: 'E-Cargo Bike CHIKE' },

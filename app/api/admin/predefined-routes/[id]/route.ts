@@ -1,25 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
-import { join } from 'path'
-
-const DIR  = join(process.cwd(), 'data')
-const FILE = join(DIR, 'predefined-routes.json')
-
-function read() {
-  if (!existsSync(FILE)) return []
-  return JSON.parse(readFileSync(FILE, 'utf-8'))
-}
-function write(data: unknown) {
-  if (!existsSync(DIR)) mkdirSync(DIR, { recursive: true })
-  writeFileSync(FILE, JSON.stringify(data, null, 2))
-}
+import { readPredefinedRoutes, writePredefinedRoutes } from '@/lib/data-server'
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
     const body = await req.json()
-    const routes = read()
-    const idx = routes.findIndex((r: { id: string }) => r.id === id)
+    const routes = await readPredefinedRoutes() as Array<Record<string, unknown>>
+    const idx = routes.findIndex((r) => r.id === id)
     if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
     routes[idx] = {
@@ -30,10 +17,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       duration:    body.duration  || routes[idx].duration,
       difficulty:  body.difficulty || routes[idx].difficulty,
       emoji:       body.emoji     || routes[idx].emoji,
-      end:       [parseFloat(body.endLat), parseFloat(body.endLng)],
+      end:       [parseFloat(body.endLat as string), parseFloat(body.endLng as string)],
       waypoints: Array.isArray(body.waypoints) ? body.waypoints : (routes[idx].waypoints ?? []),
     }
-    write(routes)
+    await writePredefinedRoutes(routes)
     return NextResponse.json(routes[idx])
   } catch {
     return NextResponse.json({ error: 'Failed to update' }, { status: 500 })
@@ -43,9 +30,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
-    const routes = read()
-    const filtered = routes.filter((r: { id: string }) => r.id !== id)
-    write(filtered)
+    const routes = await readPredefinedRoutes() as Array<Record<string, unknown>>
+    const filtered = routes.filter((r) => r.id !== id)
+    await writePredefinedRoutes(filtered)
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500 })

@@ -1,5 +1,7 @@
 import PricingClient from './PricingClient'
+import { readShopBikes } from '@/lib/data-server'
 
-export default function PricingPage() {
-  return <PricingClient />
+export default async function PricingPage() {
+  const bikes = await readShopBikes()
+  return <PricingClient initialBikes={bikes} />
 }

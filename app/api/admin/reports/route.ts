@@ -5,7 +5,7 @@ import { readReports, writeReports } from '@/lib/data-server'
 export async function GET() {
   try {
     await requireAdmin()
-    return NextResponse.json(readReports())
+    return NextResponse.json(await readReports())
   } catch { return unauthorizedResponse() }
 }
 
@@ -15,8 +15,8 @@ export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url)
     const id = searchParams.get('id')
     if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 })
-    const reports = readReports().filter((r) => r.id !== id)
-    writeReports(reports)
+    const reports = (await readReports()).filter((r) => r.id !== id)
+    await writeReports(reports)
     return NextResponse.json({ ok: true })
   } catch { return unauthorizedResponse() }
 }
@@ -26,8 +26,8 @@ export async function PATCH(req: Request) {
     await requireAdmin()
     const { id, resolved } = await req.json()
     if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 })
-    const reports = readReports().map((r) => r.id === id ? { ...r, resolved } : r)
-    writeReports(reports)
+    const reports = (await readReports()).map((r) => r.id === id ? { ...r, resolved } : r)
+    await writeReports(reports)
     return NextResponse.json({ ok: true })
   } catch { return unauthorizedResponse() }
 }

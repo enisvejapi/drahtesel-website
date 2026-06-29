@@ -81,7 +81,7 @@
     "feat3Title": "Freundlicher lokaler Support",
     "feat3Desc": "Ruf uns an oder schreib uns jederzeit. Echte Menschen, schnelle Antworten — auf Deutsch und Englisch.",
     "feat4Title": "Alles inklusive",
-    "feat4Desc": "Helm, Schloss und Flickzeug sind bei jeder Vermietung inklusive. Keine versteckten Extras bei der Abholung.",
+    "feat4Desc": "Helm und Schloss sind bei jeder Vermietung inklusive. Keine versteckten Extras bei der Abholung.",
     "feat5Title": "4.6 Sterne bei Google",
     "feat5Desc": "Über 150 verifizierte Bewertungen von echten Kunden. Vertrauen durch jahrelangen Service.",
     "feat6Title": "Flexible Mietdauer",
@@ -160,13 +160,13 @@
   },
   "pricing": {
     "title": "Transparent & fair",
-    "subtitle": "Alle Preise inklusive Helm, Schloss und Flickzeug. Keine versteckten Gebühren.",
+    "subtitle": "Alle Preise inklusive Helm und Schloss. Keine versteckten Gebühren.",
     "fullDay": "Ganztag",
     "threeDays": "3 Tage",
     "week": "1 Woche",
     "book": "Buchen",
     "included": "Immer inklusive",
-    "includedItems": "Helm, Schloss, Flickzeug",
+    "includedItems": "Helm, Schloss",
     "note": "* Preise können je nach Saison variieren. Für Gruppenanfragen kontaktiere uns bitte."
   },
   "locations": {
@@ -230,6 +230,16 @@
     "saving": "Speichert...",
     "deleting": "Löscht...",
     "language": "Sprache"
+  },
+  "openingHours": {
+    "title": "Öffnungszeiten",
+    "open": "Geöffnet",
+    "closed": "Geschlossen",
+    "today": "Heute",
+    "daily": "Täglich",
+    "closedToday": "Heute geschlossen",
+    "specialOpen": "Heute besondere Öffnungszeiten",
+    "specialClosed": "Heute vorübergehend geschlossen"
   },
   "lang": {
     "de": "Deutsch",

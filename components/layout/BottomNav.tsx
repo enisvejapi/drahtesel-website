@@ -20,8 +20,15 @@ export default function BottomNav() {
     { href: '/pricing', icon: Tag, label: de ? 'Shop' : 'Shop' },
   ]
 
+  const isDarkPage = pathname === '/pricing'
+
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]"
+    <nav className={clsx(
+      'md:hidden fixed bottom-0 left-0 right-0 z-50 border-t transition-colors',
+      isDarkPage
+        ? 'bg-[#0e0e0e]/95 backdrop-blur-md border-white/[0.08] shadow-[0_-4px_20px_rgba(0,0,0,0.4)]'
+        : 'bg-white border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]'
+    )}
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div className="flex items-end justify-around px-2 pt-2 pb-3">
 
@@ -32,10 +39,10 @@ export default function BottomNav() {
             <Link key={href} href={href}
               className={clsx(
                 'flex flex-col items-center gap-0.5 min-w-[52px] py-1 px-2 rounded-xl transition-colors',
-                active ? 'text-brand-red' : 'text-gray-400 hover:text-gray-700'
+                active ? 'text-brand-red' : isDarkPage ? 'text-white/30 hover:text-white/60' : 'text-gray-400 hover:text-gray-700'
               )}>
               <Icon size={22} strokeWidth={active ? 2.2 : 1.8} />
-              <span className={clsx('text-[10px] font-semibold', active ? 'text-brand-red' : 'text-gray-400')}>{label}</span>
+              <span className={clsx('text-[10px] font-semibold', active ? 'text-brand-red' : isDarkPage ? 'text-white/30' : 'text-gray-400')}>{label}</span>
               {active && <span className="w-1 h-1 rounded-full bg-brand-red mt-0.5" />}
             </Link>
           )
@@ -62,10 +69,10 @@ export default function BottomNav() {
             <Link key={href} href={href}
               className={clsx(
                 'flex flex-col items-center gap-0.5 min-w-[52px] py-1 px-2 rounded-xl transition-colors',
-                active ? 'text-brand-red' : 'text-gray-400 hover:text-gray-700'
+                active ? 'text-brand-red' : isDarkPage ? 'text-white/30 hover:text-white/60' : 'text-gray-400 hover:text-gray-700'
               )}>
               <Icon size={22} strokeWidth={active ? 2.2 : 1.8} />
-              <span className={clsx('text-[10px] font-semibold', active ? 'text-brand-red' : 'text-gray-400')}>{label}</span>
+              <span className={clsx('text-[10px] font-semibold', active ? 'text-brand-red' : isDarkPage ? 'text-white/30' : 'text-gray-400')}>{label}</span>
               {active && <span className="w-1 h-1 rounded-full bg-brand-red mt-0.5" />}
             </Link>
           )

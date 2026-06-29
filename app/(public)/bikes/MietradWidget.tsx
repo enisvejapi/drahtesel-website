@@ -86,7 +86,6 @@ bike-rental-service {
 `
 
 function resetBar(bar: HTMLElement) {
-  // Strip inline styles Mietrad writes — our CSS !important rules take over
   bar.style.removeProperty('top')
   bar.style.removeProperty('position')
   bar.style.removeProperty('bottom')
@@ -103,8 +102,6 @@ export default function MietradWidget() {
       document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(resetBar)
     }
 
-    // Watch the whole document for any attribute change or new node
-    // that looks like the Mietrad bar — fires before paint
     observer = new MutationObserver((mutations) => {
       for (const m of mutations) {
         if (
@@ -132,7 +129,6 @@ export default function MietradWidget() {
       attributeFilter: ['style'],
     })
 
-    // Also run immediately in case the bar already exists
     applyToAllBars()
 
     return () => observer?.disconnect()

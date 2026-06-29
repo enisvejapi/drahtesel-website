@@ -1,0 +1,425 @@
+[
+  {
+    "id": "stormguard-eplus-1",
+    "name": "Giant Stormguard E+ 1",
+    "subtitleDe": "CUES Edition 2024",
+    "subtitleEn": "CUES Edition 2024",
+    "badgeDe": "E-FullyMTB",
+    "badgeEn": "E-FullyMTB",
+    "price": "5.899",
+    "accentColor": "#C8102E",
+    "heroImage": "/stormguard-hero.png",
+    "cardImage": "/stormguard-side.png",
+    "triptychImage": "/stormguard-triptych.png",
+    "descriptionDe": "Das SUV unter den E-Bikes. 85 Nm, 800 Wh, Carbon-Riemenantrieb — für Norderney und weit darüber hinaus.",
+    "descriptionEn": "The SUV of e-bikes. 85 Nm, 800 Wh, carbon belt drive — for Norderney and far beyond.",
+    "benefitsTitleDe": "Das Fully\nMountain E-Bike.",
+    "benefitsTitleEn": "The Fully\nMountain E-Bike.",
+    "colors": [
+      "Blue Dragonfly",
+      "Black"
+    ],
+    "stats": [
+      {
+        "value": "85",
+        "unit": "Nm",
+        "labelDe": "Drehmoment",
+        "labelEn": "Torque",
+        "sub": "Yamaha SyncDrive Pro2"
+      },
+      {
+        "value": "800",
+        "unit": "Wh",
+        "labelDe": "Akkukapazität",
+        "labelEn": "Battery",
+        "sub": "EnergyPak Smart"
+      },
+      {
+        "value": "250",
+        "unit": "km",
+        "labelDe": "Reichweite",
+        "labelEn": "Range",
+        "sub": "Maximal"
+      },
+      {
+        "value": "30.3",
+        "unit": "kg",
+        "labelDe": "Gewicht",
+        "labelEn": "Weight",
+        "sub": "Größe L"
+      }
+    ],
+    "specs": [
+      {
+        "keyDe": "Motor",
+        "keyEn": "Motor",
+        "valueDe": "Yamaha SyncDrive Pro2 — 85 Nm",
+        "valueEn": "Yamaha SyncDrive Pro2 — 85 Nm"
+      },
+      {
+        "keyDe": "Akku",
+        "keyEn": "Battery",
+        "valueDe": "EnergyPak Smart 800 Wh",
+        "valueEn": "EnergyPak Smart 800 Wh"
+      },
+      {
+        "keyDe": "Reichweite",
+        "keyEn": "Range",
+        "valueDe": "70 – 250 km (je nach Bedingungen)",
+        "valueEn": "70 – 250 km (depending on conditions)"
+      },
+      {
+        "keyDe": "Schaltung",
+        "keyEn": "Gears",
+        "valueDe": "Shimano Cues 11-Gang",
+        "valueEn": "Shimano Cues 11-speed"
+      },
+      {
+        "keyDe": "Bremsen",
+        "keyEn": "Brakes",
+        "valueDe": "Shimano Deore 4-Kolben Hydraulik, 203 mm",
+        "valueEn": "Shimano Deore 4-piston hydraulic, 203mm"
+      },
+      {
+        "keyDe": "Rahmen",
+        "keyEn": "Frame",
+        "valueDe": "ALUXX SL Aluminium, 100 mm Federung",
+        "valueEn": "ALUXX SL Aluminium, 100mm full suspension"
+      },
+      {
+        "keyDe": "Laufräder",
+        "keyEn": "Wheels",
+        "valueDe": "27.5\" Tubeless-Ready",
+        "valueEn": "27.5\" Tubeless-Ready"
+      },
+      {
+        "keyDe": "Gewicht",
+        "keyEn": "Weight",
+        "valueDe": "30,3 kg (Größe L)",
+        "valueEn": "30.3 kg (size L)"
+      },
+      {
+        "keyDe": "Größen",
+        "keyEn": "Sizes",
+        "valueDe": "S / M / L / XL",
+        "valueEn": "S / M / L / XL"
+      }
+    ],
+    "highlightsDe": [
+      "Carbon-Riemenantrieb (10.000+ km wartungsfrei)",
+      "Dropper Seatpost integriert",
+      "RideDash EVO Farbdisplay (kabellos)",
+      "Giant RideControl App (ANT+)",
+      "60% Akku in 2 Std. 15 Min."
+    ],
+    "highlightsEn": [
+      "Carbon belt drive (10,000+ km maintenance-free)",
+      "Integrated dropper seatpost",
+      "RideDash EVO color display (wireless)",
+      "Giant RideControl App (ANT+)",
+      "60% charge in 2h 15min"
+    ],
+    "benefits": [
+      {
+        "n": "01",
+        "titleDe": "Carbon-Riemenantrieb",
+        "titleEn": "Carbon Belt Drive",
+        "bodyDe": "10.000+ km wartungsfrei. Kein Öl, kein Rost — perfekt für die Salzluft auf der Insel.",
+        "bodyEn": "10,000+ km maintenance-free. No oil, no rust — perfect for island salt air.",
+        "imgPosition": "0%"
+      },
+      {
+        "n": "02",
+        "titleDe": "Vollgefedert",
+        "titleEn": "Full Suspension",
+        "bodyDe": "100 mm Federweg vorne und hinten. Jeder Weg auf Norderney wird zum Vergnügen.",
+        "bodyEn": "100mm front and rear travel. Every path on Norderney becomes a pleasure.",
+        "imgPosition": "50%"
+      },
+      {
+        "n": "03",
+        "titleDe": "800 Wh Akku",
+        "titleEn": "800 Wh Battery",
+        "bodyDe": "Bis zu 250 km Reichweite. Die ganze Insel und weit darüber hinaus.",
+        "bodyEn": "Up to 250 km range. The whole island and far beyond.",
+        "imgPosition": "100%"
+      }
+    ],
+    "faqsDe": [
+      {
+        "q": "Kann ich das Fahrrad vor dem Kauf Probefahren?",
+        "a": "Ja — Probefahrten sind jederzeit nach Absprache möglich. Ruf uns einfach an oder schreib uns."
+      },
+      {
+        "q": "Ist eine Finanzierung möglich?",
+        "a": "Ja, wir bieten flexible Finanzierungsoptionen an. Sprich uns persönlich an und wir finden gemeinsam eine Lösung."
+      },
+      {
+        "q": "Was ist im Kaufpreis enthalten?",
+        "a": "Im Preis enthalten sind Ersteinstellung, Einweisung und ein Jahr Inspektionsservice. Das ABUS Schloss ist ebenfalls inklusive."
+      },
+      {
+        "q": "Wie lange ist die Lieferzeit?",
+        "a": "Bei Lagerbestand direkte Mitnahme möglich. Bei Bestellung auf Wunsch ca. 2–4 Wochen."
+      },
+      {
+        "q": "Gibt es eine Garantie?",
+        "a": "2 Jahre Herstellergarantie auf alle Komponenten, 4 Jahre auf den Rahmen."
+      }
+    ],
+    "faqsEn": [
+      {
+        "q": "Can I test ride before buying?",
+        "a": "Yes — test rides are available anytime by appointment. Just call or write to us."
+      },
+      {
+        "q": "Is financing available?",
+        "a": "Yes, we offer flexible financing options. Talk to us in person and we'll find a solution together."
+      },
+      {
+        "q": "What's included in the purchase price?",
+        "a": "Included are initial setup, briefing, and one year inspection service. The ABUS lock is also included."
+      },
+      {
+        "q": "How long is the delivery time?",
+        "a": "In-stock items can be taken immediately. On-order delivery is approximately 2–4 weeks."
+      },
+      {
+        "q": "Is there a warranty?",
+        "a": "2-year manufacturer warranty on all components, 4 years on the frame."
+      }
+    ]
+  },
+  {
+    "id": "momentum-pakyak-eplus",
+    "name": "Momentum PakYak E+",
+    "subtitleDe": "Cargo Edition 2024",
+    "subtitleEn": "Cargo Edition 2024",
+    "badgeDe": "E-Cargo",
+    "badgeEn": "E-Cargo",
+    "price": "5.369",
+    "accentColor": "#E8B800",
+    "heroImage": "/uploads/bikes/1778961341993-rgeu4r61yza.png",
+    "cardImage": "/uploads/bikes/1778961344942-x4syylk7rfb.png",
+    "triptychImage": "/pakyak-details.png",
+    "descriptionDe": "Das Lastentier von Norderney. 1000 Wh, 155 kg Zuladung, Storage Box — alles drauf, alles dabei.",
+    "descriptionEn": "Norderney's ultimate cargo beast. 1000 Wh, 155 kg payload, storage box — carry everything, go anywhere.",
+    "benefitsTitleDe": "Das Familien\nCargo E-Bike.",
+    "benefitsTitleEn": "The Family\nCargo E-Bike.",
+    "colors": [
+      "Canary Yellow"
+    ],
+    "stats": [
+      {
+        "value": "80",
+        "unit": "Nm",
+        "labelDe": "Drehmoment",
+        "labelEn": "Torque",
+        "sub": "Giant SyncDrive Pro"
+      },
+      {
+        "value": "1000",
+        "unit": "Wh",
+        "labelDe": "Akkukapazität",
+        "labelEn": "Battery",
+        "sub": "EnergyPak Smart Compact"
+      },
+      {
+        "value": "155",
+        "unit": "kg",
+        "labelDe": "Zuladung",
+        "labelEn": "Payload",
+        "sub": "Fahrer + Gepäck"
+      },
+      {
+        "value": "45",
+        "unit": "kg",
+        "labelDe": "Gewicht",
+        "labelEn": "Weight",
+        "sub": "One Size"
+      }
+    ],
+    "specs": [
+      {
+        "keyDe": "Motor",
+        "keyEn": "Motor",
+        "valueDe": "Giant SyncDrive Pro — 80 Nm",
+        "valueEn": "Giant SyncDrive Pro — 80 Nm"
+      },
+      {
+        "keyDe": "Akku",
+        "keyEn": "Battery",
+        "valueDe": "Giant EnergyPak Smart Compact 1000 Wh",
+        "valueEn": "Giant EnergyPak Smart Compact 1000 Wh"
+      },
+      {
+        "keyDe": "Display",
+        "keyEn": "Display",
+        "valueDe": "RideControl Dash",
+        "valueEn": "RideControl Dash"
+      },
+      {
+        "keyDe": "Bremsen",
+        "keyEn": "Brakes",
+        "valueDe": "TEKTRO HD-E737 203/203 mm",
+        "valueEn": "TEKTRO HD-E737 203/203 mm"
+      },
+      {
+        "keyDe": "Schaltung",
+        "keyEn": "Drivetrain",
+        "valueDe": "Shimano Alivio 1x9",
+        "valueEn": "Shimano Alivio 1x9"
+      },
+      {
+        "keyDe": "Laufräder",
+        "keyEn": "Wheelset",
+        "valueDe": "Momentum Alu 24\"",
+        "valueEn": "Momentum Alu 24\""
+      },
+      {
+        "keyDe": "Reifen",
+        "keyEn": "Tires",
+        "valueDe": "MAXXIS Rekon 2.5\" / Hookworm 2.2\"",
+        "valueEn": "MAXXIS Rekon 2.5\" / Hookworm 2.2\""
+      },
+      {
+        "keyDe": "Lenker",
+        "keyEn": "Handlebar",
+        "valueDe": "Momentum Alu 720 mm",
+        "valueEn": "Momentum Alu 720 mm"
+      },
+      {
+        "keyDe": "Gabel",
+        "keyEn": "Fork",
+        "valueDe": "ALUXX Aluminium, Starr",
+        "valueEn": "ALUXX Aluminium, Rigid"
+      },
+      {
+        "keyDe": "Sattelstütze",
+        "keyEn": "Seatpost",
+        "valueDe": "Alu 70 mm",
+        "valueEn": "Alu 70 mm"
+      },
+      {
+        "keyDe": "Gewicht",
+        "keyEn": "Weight",
+        "valueDe": "45 kg",
+        "valueEn": "45 kg"
+      },
+      {
+        "keyDe": "Max. Gesamtgewicht",
+        "keyEn": "Max. total weight",
+        "valueDe": "200 kg",
+        "valueEn": "200 kg"
+      },
+      {
+        "keyDe": "Größe",
+        "keyEn": "Size",
+        "valueDe": "One Size",
+        "valueEn": "One Size"
+      }
+    ],
+    "highlightsDe": [
+      "1000 Wh — größte Akkukapazität seiner Klasse",
+      "155 kg Zuladung für Fahrer + Gepäck",
+      "Integrierte Storage Box vorne",
+      "Front- und Heckgepäckträger serienmäßig",
+      "MAXXIS Breitreifen für maximale Stabilität",
+      "Ständerhalterung integriert"
+    ],
+    "highlightsEn": [
+      "1000 Wh — largest battery in its class",
+      "155 kg payload for rider + cargo",
+      "Integrated front storage box",
+      "Front and rear cargo racks as standard",
+      "MAXXIS wide tires for maximum stability",
+      "Integrated kickstand mount"
+    ],
+    "benefits": [
+      {
+        "n": "01",
+        "titleDe": "Yamaha Power",
+        "titleEn": "Yamaha Power",
+        "bodyDe": "80 Nm Drehmoment. Kraftvoll, effizient — für jede Tour gemacht.",
+        "bodyEn": "80 Nm torque. Powerful, efficient — made for every ride.",
+        "imgPositionX": "0%",
+        "imgPositionY": "0%",
+        "hideText": false
+      },
+      {
+        "n": "02",
+        "titleDe": "TEKTRO Hydraulik",
+        "titleEn": "TEKTRO Hydraulic",
+        "bodyDe": "Präzise hydraulische Bremsen. Maximale Sicherheit bei jeder Wetterlage.",
+        "bodyEn": "Precise hydraulic brakes. Maximum safety in any weather.",
+        "imgPositionX": "100%",
+        "imgPositionY": "0%",
+        "hideText": false
+      },
+      {
+        "n": "03",
+        "titleDe": "Back Cargo",
+        "titleEn": "Back Cargo",
+        "bodyDe": "Stabiler Heckträger. Mehr Platz für alles, was du brauchst.",
+        "bodyEn": "Sturdy rear rack. More space for everything you need.",
+        "imgPositionX": "0%",
+        "imgPositionY": "100%",
+        "hideText": false
+      },
+      {
+        "n": "04",
+        "titleDe": "Front Cargo",
+        "titleEn": "Front Cargo",
+        "bodyDe": "Tiefe Frontbox. Robust, geräumig, durchdacht.",
+        "bodyEn": "Deep front box. Robust, spacious, well thought-out.",
+        "imgPositionX": "100%",
+        "imgPositionY": "100%",
+        "hideText": false
+      }
+    ],
+    "faqsDe": [
+      {
+        "q": "Wie viel kann ich transportieren?",
+        "a": "Das PakYak E+ trägt bis zu 155 kg — das sind Fahrer plus Gepäck zusammen. Das maximale Gesamtgewicht liegt bei 200 kg."
+      },
+      {
+        "q": "Ist eine Finanzierung möglich?",
+        "a": "Ja, wir bieten flexible Finanzierungsoptionen an. Sprich uns persönlich an und wir finden gemeinsam eine Lösung."
+      },
+      {
+        "q": "Was ist im Kaufpreis enthalten?",
+        "a": "Im Preis enthalten sind Ersteinstellung, Einweisung, Front- und Heckgepäckträger, Storage Box und ein Jahr Inspektionsservice."
+      },
+      {
+        "q": "Kann ich das Fahrrad vor dem Kauf Probefahren?",
+        "a": "Ja — Probefahrten sind jederzeit nach Absprache möglich. Ruf uns einfach an oder schreib uns."
+      },
+      {
+        "q": "Gibt es eine Garantie?",
+        "a": "2 Jahre Herstellergarantie auf alle Komponenten, 4 Jahre auf den Rahmen."
+      }
+    ],
+    "faqsEn": [
+      {
+        "q": "How much can I carry?",
+        "a": "The PakYak E+ carries up to 155 kg — that's rider plus cargo combined. Maximum total weight is 200 kg."
+      },
+      {
+        "q": "Is financing available?",
+        "a": "Yes, we offer flexible financing options. Talk to us in person and we'll find a solution together."
+      },
+      {
+        "q": "What's included in the purchase price?",
+        "a": "Included are initial setup, briefing, front and rear cargo racks, storage box, and one year inspection service."
+      },
+      {
+        "q": "Can I test ride before buying?",
+        "a": "Yes — test rides are available anytime by appointment. Just call or write to us."
+      },
+      {
+        "q": "Is there a warranty?",
+        "a": "2-year manufacturer warranty on all components, 4 years on the frame."
+      }
+    ]
+  }
+]

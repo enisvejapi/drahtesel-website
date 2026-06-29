@@ -1,6 +1,5 @@
 import Hero from '@/components/sections/Hero'
 import FeatureShowcase from '@/components/sections/FeatureShowcase'
-import QuickBook from '@/components/sections/QuickBook'
 import Categories from '@/components/sections/Categories'
 import HowItWorks from '@/components/sections/HowItWorks'
 import FeaturedBikes from '@/components/sections/FeaturedBikes'
@@ -9,16 +8,15 @@ import Reviews from '@/components/sections/Reviews'
 import FaqTeaser from '@/components/sections/FaqTeaser'
 import CtaBanner from '@/components/sections/CtaBanner'
 import BikeReport from '@/components/sections/BikeReport'
-import { readReviews, readFaqs } from '@/lib/data-server'
+import { readReviews, readFaqs, readHeroImages, readOpeningHours } from '@/lib/data-server'
 
 export default async function HomePage() {
-  const [reviews, faqs] = await Promise.all([readReviews(), readFaqs()])
+  const [reviews, faqs, heroImages, openingHours] = await Promise.all([readReviews(), readFaqs(), readHeroImages(), readOpeningHours()])
 
   return (
     <>
-      <Hero />
+      <Hero images={heroImages} openingHours={openingHours} />
       <FeatureShowcase />
-      <QuickBook />
       <Categories />
       <HowItWorks />
       <FeaturedBikes />

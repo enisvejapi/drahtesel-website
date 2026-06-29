@@ -10,22 +10,47 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const { t } = useLocale()
+  const [scrolled,        setScrolled]        = useState(false)
+  const [heroBrightness,  setHeroBrightness]  = useState(0) // 0=dark, 255=bright
+  const { t }    = useLocale()
   const pathname = usePathname()
 
+  const isHomePage    = pathname === '/'
+  const isGlassPage   = pathname === '/pricing' // stays frosted glass while scrolling, never solid white
+
   useEffect(() => {
-    const hero = document.querySelector('section')
+    if (isGlassPage) {
+      setScrolled(false) // never turns white
+      return
+    }
+    if (!isHomePage) {
+      setScrolled(true)
+      return
+    }
+    setScrolled(false)
+    const hero = document.getElementById('hero-section')
     if (!hero) return
     const observer = new IntersectionObserver(
       ([entry]) => setScrolled(!entry.isIntersecting),
-      { threshold: 0 }
+      { threshold: 0, rootMargin: '30% 0px 0px 0px' }
     )
     observer.observe(hero)
     return () => observer.disconnect()
+  }, [pathname, isHomePage, isGlassPage])
+
+  // Listen for brightness updates from the hero slideshow
+  useEffect(() => {
+    const handler = (e: Event) => setHeroBrightness((e as CustomEvent<number>).detail)
+    window.addEventListener('hero-brightness', handler)
+    return () => window.removeEventListener('hero-brightness', handler)
   }, [])
 
+  // If hero image top is bright → use dark text, else white
+  const heroIsLight = isHomePage && !scrolled && heroBrightness > 140
+
   if (pathname.startsWith('/tours')) return null
+
+  const isDarkPage = false // removed — handled by isDarkHero above
 
   const navLinks = [
     { label: t('nav.bikes'), href: '/bikes' },
@@ -39,10 +64,12 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        'sticky top-0 md:fixed md:left-0 md:right-0 z-50 transition-all duration-500',
         scrolled
           ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-black/20 backdrop-blur-md'
+          : isGlassPage
+            ? 'bg-white/10 backdrop-blur-md border-b border-white/10'
+            : 'bg-black/80 md:bg-black/20 backdrop-blur-md'
       )}
     >
       <div className="container-site">
@@ -61,7 +88,7 @@ export default function Navbar() {
             </div>
             <span className={clsx(
               'font-bold tracking-tight transition-colors duration-500 flex items-baseline gap-1',
-              scrolled ? 'text-brand-black' : 'text-white'
+              scrolled && !isDarkPage ? 'text-brand-black' : 'text-white'
             )}>
               <span className="text-xl md:text-2xl">Drahtesel</span>
               <span className="text-[13px] md:text-[15px] font-semibold opacity-70">- Norderney</span>
@@ -76,7 +103,7 @@ export default function Navbar() {
                 href={link.href}
                 className={clsx(
                   'font-medium transition-colors duration-300 text-sm',
-                  scrolled
+                  scrolled && !isDarkPage
                     ? 'text-brand-gray hover:text-brand-black'
                     : 'text-white/90 hover:text-white'
                 )}
@@ -93,7 +120,7 @@ export default function Navbar() {
               href="tel:+4949324980397"
               className={clsx(
                 'flex items-center gap-1.5 text-sm transition-colors duration-300',
-                scrolled
+                scrolled && !isDarkPage
                   ? 'text-brand-gray hover:text-brand-black'
                   : 'text-white/90 hover:text-white'
               )}
@@ -108,7 +135,7 @@ export default function Navbar() {
 
           {/* Mobile: language switcher */}
           <div className="md:hidden flex items-center gap-2">
-            <LanguageSwitcher light={!scrolled} />
+            <LanguageSwitcher light={!scrolled || isDarkPage} />
           </div>
 
         </div>

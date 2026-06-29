@@ -6,7 +6,7 @@ import { hashPassword } from '@/lib/auth'
 export async function GET() {
   try {
     await requireAdmin()
-    const settings = readSettings()
+    const settings = await readSettings()
     return NextResponse.json({
       passwordHash: settings.passwordHash ? '***set***' : null,
     })
@@ -17,13 +17,13 @@ export async function POST(request: Request) {
   try {
     await requireAdmin()
     const body = await request.json()
-    const settings = readSettings()
+    const settings = await readSettings()
 
     if (body.newPassword && typeof body.newPassword === 'string' && body.newPassword.length >= 8) {
       settings.passwordHash = await hashPassword(body.newPassword)
     }
 
-    writeSettings(settings)
+    await writeSettings(settings)
     return NextResponse.json({ ok: true })
   } catch (err) {
     if ((err as Error).message === 'Unauthorized') return unauthorizedResponse()

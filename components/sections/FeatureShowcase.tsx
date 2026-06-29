@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useLocale } from '@/components/LocaleProvider'
-import { ArrowRight, ChevronLeft, ChevronRight, Navigation, Bike, Map, Wrench } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Navigation, Bike, Map, Wrench, ShoppingCart } from 'lucide-react'
 
 // ── Phone mockup: GPS Navigation ────────────────────────────────────────────
 function NavMockup() {
@@ -11,7 +11,7 @@ function NavMockup() {
   const steps = ['Links abbiegen', 'Geradeaus fahren', 'Ziel erreicht! 🏁']
   const arrows = ['left', 'straight', 'arrive']
   useEffect(() => {
-    const t = setInterval(() => setStep(s => (s + 1) % steps.length), 2200)
+    const t = setInterval(() => setStep(s => (s + 1) % steps.length), 3500)
     return () => clearInterval(t)
   }, [])
   const arrowAngle = arrows[step] === 'left' ? -90 : 0
@@ -67,7 +67,7 @@ function BikeMockup() {
   ]
   const [active, setActive] = useState(0)
   useEffect(() => {
-    const t = setInterval(() => setActive(a => (a+1) % bikes.length), 2500)
+    const t = setInterval(() => setActive(a => (a+1) % bikes.length), 4000)
     return () => clearInterval(t)
   }, [])
   return (
@@ -106,7 +106,7 @@ function ExploreMockup() {
   ]
   const [active, setActive] = useState(0)
   useEffect(() => {
-    const t = setInterval(() => setActive(a => (a+1) % pins.length), 2000)
+    const t = setInterval(() => setActive(a => (a+1) % pins.length), 3200)
     return () => clearInterval(t)
   }, [])
   const pin = pins[active]
@@ -224,6 +224,87 @@ function ReportMockup() {
   )
 }
 
+// ── Phone mockup: Bike Shop (buy, not rent) ──────────────────────────────────
+function ShopMockup() {
+  const [phase, setPhase] = useState(0)
+  // 0 = product page  1 = added to cart  2 = order confirmed
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase(1), 3000)
+    const t2 = setTimeout(() => setPhase(2), 5500)
+    const t3 = setTimeout(() => setPhase(0), 9000)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [])
+
+  return (
+    <div style={{ height: '100%', background: '#0f0f0f', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+
+      {/* Product hero image area */}
+      <div style={{ background: 'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)', height: 110, position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontSize: 52, filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}>⚡</span>
+        <div style={{ position: 'absolute', top: 8, left: 8, background: '#C8102E', borderRadius: 6, padding: '2px 8px' }}>
+          <span style={{ fontSize: 8, fontWeight: 800, color: 'white', fontFamily: 'system-ui' }}>NEU</span>
+        </div>
+        <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', borderRadius: 6, padding: '2px 8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <span style={{ fontSize: 8, fontWeight: 700, color: 'rgba(255,255,255,0.8)', fontFamily: 'system-ui' }}>Giant</span>
+        </div>
+      </div>
+
+      {/* Product info */}
+      <div style={{ padding: '10px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div>
+          <div style={{ fontSize: 12, fontWeight: 900, color: 'white', fontFamily: 'system-ui', marginBottom: 2 }}>Giant Stormguard E+ 1</div>
+          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'system-ui' }}>E-Trekkingbike · Modell 2025</div>
+        </div>
+
+        {/* Price */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+          <span style={{ fontSize: 18, fontWeight: 900, color: '#0ea5e9', fontFamily: 'system-ui' }}>3.499 €</span>
+          <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontFamily: 'system-ui', textDecoration: 'line-through' }}>3.999 €</span>
+          <span style={{ fontSize: 8, fontWeight: 800, background: 'rgba(14,165,233,0.15)', color: '#0ea5e9', borderRadius: 5, padding: '1px 5px', fontFamily: 'system-ui' }}>−13%</span>
+        </div>
+
+        {/* Specs row */}
+        <div style={{ display: 'flex', gap: 5 }}>
+          {['250W Motor', '504Wh', 'Shimano'].map(s => (
+            <div key={s} style={{ borderRadius: 6, padding: '2px 6px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span style={{ fontSize: 7.5, fontWeight: 600, color: 'rgba(255,255,255,0.5)', fontFamily: 'system-ui' }}>{s}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Cart button / states */}
+        {phase === 0 && (
+          <div style={{ marginTop: 'auto', background: '#0ea5e9', borderRadius: 11, padding: '9px', textAlign: 'center', boxShadow: '0 4px 16px rgba(14,165,233,0.4)' }}>
+            <span style={{ fontSize: 11, fontWeight: 800, color: 'white', fontFamily: 'system-ui' }}>In den Warenkorb →</span>
+          </div>
+        )}
+        {phase === 1 && (
+          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={{ background: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.3)', borderRadius: 10, padding: '7px 10px', display: 'flex', alignItems: 'center', gap: 7 }}>
+              <span style={{ fontSize: 14 }}>🛒</span>
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 800, color: 'white', fontFamily: 'system-ui' }}>Im Warenkorb!</div>
+                <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.4)', fontFamily: 'system-ui' }}>Giant Stormguard E+ 1</div>
+              </div>
+              <span style={{ marginLeft: 'auto', fontSize: 11, fontWeight: 900, color: '#0ea5e9', fontFamily: 'system-ui' }}>3.499 €</span>
+            </div>
+            <div style={{ background: '#C8102E', borderRadius: 11, padding: '9px', textAlign: 'center', boxShadow: '0 4px 14px rgba(200,16,46,0.4)' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: 'white', fontFamily: 'system-ui' }}>Zur Kasse →</span>
+            </div>
+          </div>
+        )}
+        {phase === 2 && (
+          <div style={{ marginTop: 'auto', background: 'rgba(22,163,74,0.1)', border: '1px solid rgba(22,163,74,0.35)', borderRadius: 12, padding: '12px 10px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, textAlign: 'center' }}>
+            <span style={{ fontSize: 22 }}>✅</span>
+            <div style={{ fontSize: 11, fontWeight: 900, color: 'white', fontFamily: 'system-ui' }}>Bestellung eingegangen!</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'system-ui', lineHeight: 1.5 }}>Wir melden uns in Kürze<br />per E-Mail bei dir.</div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ── Main section ─────────────────────────────────────────────────────────────
 export default function FeatureShowcase() {
   const { locale } = useLocale()
@@ -293,6 +374,20 @@ export default function FeatureShowcase() {
       mockup: <ReportMockup />,
       num: '04',
     },
+    {
+      icon: <ShoppingCart size={16} />,
+      tag: de ? 'Online Shop' : 'Online Shop',
+      title: de ? 'Dein neues E-Bike —\ndirekt online kaufen' : 'Your new e-bike —\nbuy directly online',
+      desc: de
+        ? 'Stöbere durch unser Sortiment — E-Bikes, Trekkingbikes und mehr. Kaufe direkt online und wir kümmern uns um den Rest.'
+        : 'Browse our range — e-bikes, trekking bikes and more. Buy directly online and we take care of the rest.',
+      cta: de ? 'Zum Shop' : 'Go to shop',
+      href: '/pricing',
+      color: '#0ea5e9',
+      glow: 'rgba(14,165,233,0.18)',
+      mockup: <ShopMockup />,
+      num: '05',
+    },
   ]
 
   const resetAuto = useCallback(() => {
@@ -304,7 +399,7 @@ export default function FeatureShowcase() {
         setCurrent(c => (c + 1) % features.length)
         setAnimating(false)
       }, 420)
-    }, 5000)
+    }, 8000)
   }, [features.length])
 
   useEffect(() => {
@@ -346,12 +441,6 @@ export default function FeatureShowcase() {
           opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)',
           transition: 'opacity 0.6s ease, transform 0.6s ease',
         }}>
-          <div style={{ display:'inline-flex',alignItems:'center',gap:8,background:'rgba(200,16,46,0.12)',border:'1px solid rgba(200,16,46,0.25)',borderRadius:20,padding:'5px 14px',marginBottom:16 }}>
-            <div style={{ width:6,height:6,borderRadius:'50%',background:'#C8102E',boxShadow:'0 0 6px rgba(200,16,46,0.8)' }} />
-            <span style={{ fontSize:11,fontWeight:700,color:'#C8102E',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'system-ui' }}>
-              {de ? 'Was dich erwartet' : 'What to expect'}
-            </span>
-          </div>
           <h2 style={{ fontSize:'clamp(22px,4vw,36px)',fontWeight:900,color:'white',letterSpacing:'-0.02em',lineHeight:1.2,margin:'0 0 10px',fontFamily:'system-ui' }}>
             {de ? 'Alles für deinen perfekten ' : 'Everything for your perfect '}
             <span style={{ color:'#C8102E' }}>{de ? 'Norderney-Urlaub' : 'Norderney holiday'}</span>
@@ -371,10 +460,12 @@ export default function FeatureShowcase() {
           {/* Card */}
           <div style={{
             background: '#111',
-            border: `1px solid ${f.color}30`,
+            border: `1px solid ${f.color}50`,
             borderRadius: 28,
             overflow: 'hidden',
-            boxShadow: `0 0 80px ${f.glow}, 0 8px 40px rgba(0,0,0,0.4)`,
+            maxWidth: 860,
+            margin: '0 auto',
+            boxShadow: `0 0 0 1px ${f.color}20, 0 0 60px ${f.color}40, 0 0 120px ${f.color}25, 0 8px 40px rgba(0,0,0,0.5)`,
             transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
             // Slide animation
             transform: animating
@@ -404,16 +495,18 @@ export default function FeatureShowcase() {
                 padding: '28px 24px',
                 borderRight: '1px solid rgba(255,255,255,0.05)',
               }}>
-                <div style={{
+                <div className="feature-phone" style={{
                   width: 180, height: 320, borderRadius: 22,
                   overflow: 'hidden',
                   border: '2px solid rgba(255,255,255,0.08)',
-                  boxShadow: `0 0 40px ${f.glow}, 0 20px 60px rgba(0,0,0,0.5)`,
+                  boxShadow: `0 0 50px ${f.color}55, 0 0 100px ${f.color}25, 0 20px 60px rgba(0,0,0,0.5)`,
                   position: 'relative', flexShrink: 0,
                 }}>
                   {/* Notch */}
                   <div style={{ position:'absolute',top:0,left:'50%',transform:'translateX(-50%)',width:52,height:7,background:'#0d0d0d',zIndex:10,borderRadius:'0 0 7px 7px' }} />
-                  {f.mockup}
+                  <div className="feature-mockup-inner" style={{ position:'absolute',inset:0 }}>
+                    {f.mockup}
+                  </div>
                 </div>
               </div>
 
@@ -533,6 +626,18 @@ export default function FeatureShowcase() {
           }
           .feature-slide-inner > div:last-child {
             padding: 24px 22px 28px !important;
+          }
+          .feature-phone {
+            width: 130px !important;
+            height: 220px !important;
+            border-radius: 16px !important;
+            overflow: hidden !important;
+          }
+          .feature-mockup-inner {
+            width: 139% !important;
+            height: 146% !important;
+            transform: scale(0.72) !important;
+            transform-origin: top left !important;
           }
         }
       `}</style>

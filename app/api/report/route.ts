@@ -25,9 +25,9 @@ export async function POST(req: Request) {
       resolved: false,
     }
 
-    const reports = readReports()
+    const reports = await readReports()
     reports.unshift(report)
-    writeReports(reports)
+    await writeReports(reports)
 
     return NextResponse.json({ ok: true })
   } catch {

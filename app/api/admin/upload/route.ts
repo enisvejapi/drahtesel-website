@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-check'
-import path from 'path'
-import fs from 'fs'
+import { supabase } from '@/lib/supabase'
 
 export async function POST(req: Request) {
   try {
@@ -17,14 +16,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'File type not allowed' }, { status: 400 })
     }
 
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
-    const dir = path.join(process.cwd(), 'public', 'pin-images')
-    fs.mkdirSync(dir, { recursive: true })
-
+    const filename = `pin-images/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
     const bytes = await file.arrayBuffer()
-    fs.writeFileSync(path.join(dir, filename), Buffer.from(bytes))
 
-    return NextResponse.json({ url: `/pin-images/${filename}` })
+    const { error } = await supabase.storage
+      .from('uploads')
+      .upload(filename, Buffer.from(bytes), {
+        contentType: file.type || 'image/jpeg',
+        upsert: false,
+      })
+
+    if (error) throw error
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('uploads')
+      .getPublicUrl(filename)
+
+    return NextResponse.json({ url: publicUrl })
   } catch (err) {
     if ((err as Error).message === 'Unauthorized') return unauthorizedResponse()
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })

@@ -7,7 +7,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import {
   LayoutDashboard, Star, HelpCircle,
-  Settings, LogOut, ChevronLeft, ChevronRight, Menu, AlertTriangle, MapPin, KeyRound, Route
+  Settings, LogOut, ChevronLeft, ChevronRight, Menu, AlertTriangle, MapPin, KeyRound, Route, Bike, ImageIcon, Clock
 } from 'lucide-react'
 import { useLocale } from '@/components/LocaleProvider'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
@@ -24,6 +24,9 @@ export default function AdminSidebar() {
     { href: '/admin/pins', label: 'Entdeckungs-Pins', icon: MapPin },
     { href: '/admin/weekly-pins', label: 'Wochen-PINs', icon: KeyRound },
     { href: '/admin/predefined-routes', label: 'Touren-Vorschläge', icon: Route },
+    { href: '/admin/bikes', label: 'Shop — Fahrräder', icon: Bike },
+    { href: '/admin/hero-images', label: 'Hero-Bilder', icon: ImageIcon },
+    { href: '/admin/opening-hours', label: 'Öffnungszeiten', icon: Clock },
     { href: '/admin/reviews', label: t('admin.reviews'), icon: Star },
     { href: '/admin/faqs', label: t('admin.faqs'), icon: HelpCircle },
     { href: '/admin/settings', label: t('admin.settings'), icon: Settings },
