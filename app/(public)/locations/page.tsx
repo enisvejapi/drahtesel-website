@@ -169,7 +169,7 @@ export default function LocationsPage() {
                   {de ? 'Anrufen' : 'Call'}
                 </a>
                 <a
-                  href="mailto:info@drahtesel-norderney.de"
+                  href="mailto:Drahtesel-ney@outlook.com"
                   className="flex-1 flex items-center justify-center gap-1.5 bg-brand-black hover:bg-gray-800 text-white text-xs font-bold px-3 py-2 rounded-xl transition-colors"
                 >
                   <Mail size={13} />

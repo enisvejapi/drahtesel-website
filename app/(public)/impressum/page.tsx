@@ -26,7 +26,7 @@ export default function ImpressumPage() {
             <h2 className="text-xl font-bold text-brand-black mb-3">Kontakt</h2>
             <p>
               Telefon: <a href="tel:+4949324980397" className="text-brand-red hover:underline">+49 4932 4980397</a><br />
-              E-Mail: <a href="mailto:info@drahtesel-norderney.de" className="text-brand-red hover:underline">info@drahtesel-norderney.de</a><br />
+              E-Mail: <a href="mailto:Drahtesel-ney@outlook.com" className="text-brand-red hover:underline">Drahtesel-ney@outlook.com</a><br />
               Website: <a href="https://www.drahtesel-norderney.de" className="text-brand-red hover:underline">www.drahtesel-norderney.de</a>
             </p>
           </section>

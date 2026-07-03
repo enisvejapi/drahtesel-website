@@ -20,7 +20,7 @@ export default function DatenschutzPage() {
               Herrenpfad 21–22<br />
               26548 Norderney<br /><br />
               Telefon: <a href="tel:+4949324980397" className="text-brand-red hover:underline">+49 4932 4980397</a><br />
-              E-Mail: <a href="mailto:info@drahtesel-norderney.de" className="text-brand-red hover:underline">info@drahtesel-norderney.de</a>
+              E-Mail: <a href="mailto:Drahtesel-ney@outlook.com" className="text-brand-red hover:underline">Drahtesel-ney@outlook.com</a>
             </p>
           </section>
 
@@ -97,7 +97,7 @@ export default function DatenschutzPage() {
             </ul>
             <p className="mt-3">
               Zur Ausübung Ihrer Rechte wenden Sie sich bitte an:{' '}
-              <a href="mailto:info@drahtesel-norderney.de" className="text-brand-red hover:underline">info@drahtesel-norderney.de</a>
+              <a href="mailto:Drahtesel-ney@outlook.com" className="text-brand-red hover:underline">Drahtesel-ney@outlook.com</a>
             </p>
           </section>
 

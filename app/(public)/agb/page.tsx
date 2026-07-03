@@ -95,7 +95,7 @@ export default function AGBPage() {
           </section>
 
           <p className="text-xs text-brand-gray pt-4 border-t border-gray-200">
-            Drahtesel Fahrradverleih · Herrenpfad 21–22 · 26548 Norderney · info@drahtesel-norderney.de
+            Drahtesel Fahrradverleih · Herrenpfad 21–22 · 26548 Norderney · Drahtesel-ney@outlook.com
           </p>
         </div>
       </div>

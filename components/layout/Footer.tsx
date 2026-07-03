@@ -56,8 +56,8 @@ export default function Footer() {
               <a href="tel:+4949324980397" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Phone size={15} /> +49 4932 4980397
               </a>
-              <a href="mailto:info@drahtesel-norderney.de" className="flex items-center gap-2 hover:text-white transition-colors">
-                <Mail size={15} /> info@drahtesel-norderney.de
+              <a href="mailto:Drahtesel-ney@outlook.com" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Mail size={15} /> Drahtesel-ney@outlook.com
               </a>
               <span className="flex items-center gap-2">
                 <MapPin size={15} /> Herrenpfad 21-22, 26548 Norderney

@@ -25,9 +25,9 @@ export default function ContactPage() {
     {
       icon: <Mail size={20} />,
       title: 'E-Mail',
-      value: 'info@drahtesel-norderney.de',
+      value: 'Drahtesel-ney@outlook.com',
       sub: de ? 'Wir antworten innerhalb weniger Stunden' : 'We reply within a few hours',
-      href: 'mailto:info@drahtesel-norderney.de',
+      href: 'mailto:Drahtesel-ney@outlook.com',
     },
     {
       icon: <MapPin size={20} />,
