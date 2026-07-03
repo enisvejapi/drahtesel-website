@@ -1,25 +1,13 @@
 import { NextResponse } from 'next/server'
 import type { POI } from '@/lib/pois'
-import { supabase } from '@/lib/supabase'
+import { readKV, writeKV } from '@/lib/db'
 
 async function readPOIs(): Promise<POI[]> {
-  try {
-    const { data, error } = await supabase
-      .from('kv_store')
-      .select('data')
-      .eq('key', 'tour_pois')
-      .single()
-    if (error || !data) return []
-    return data.data as POI[]
-  } catch {
-    return []
-  }
+  return readKV<POI[]>('tour_pois', [])
 }
 
 async function writePOIs(pois: POI[]) {
-  await supabase
-    .from('kv_store')
-    .upsert({ key: 'tour_pois', data: pois, updated_at: new Date().toISOString() })
+  await writeKV('tour_pois', pois)
 }
 
 export async function GET(req: Request) {

@@ -8,5 +8,18 @@ services:
     environment:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
-      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - INTERNAL_SECRET=${INTERNAL_SECRET}
+      - WHATSAPP_BOT_URL=${WHATSAPP_BOT_URL}
+    volumes:
+      - uploads:/app/public/uploads
+    networks:
+      - default
+      - web-proxy
+
+volumes:
+  uploads:
+
+networks:
+  web-proxy:
+    external: true

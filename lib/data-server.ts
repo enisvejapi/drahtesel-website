@@ -1,5 +1,5 @@
 import 'server-only'
-import { supabase } from './supabase'
+import { readKV, writeKV } from './db'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 export type Review = { id: string; name: string; date: string; rating: number; text: string; source: string }
@@ -55,27 +55,6 @@ export type Report = {
   note: string
   createdAt: string
   resolved: boolean
-}
-
-// ── Generic key-value helpers ─────────────────────────────────────────────────
-async function readKV<T>(key: string, fallback: T): Promise<T> {
-  try {
-    const { data, error } = await supabase
-      .from('kv_store')
-      .select('data')
-      .eq('key', key)
-      .single()
-    if (error || !data) return fallback
-    return data.data as T
-  } catch {
-    return fallback
-  }
-}
-
-async function writeKV<T>(key: string, value: T): Promise<void> {
-  await supabase
-    .from('kv_store')
-    .upsert({ key, data: value, updated_at: new Date().toISOString() })
 }
 
 // ── Reviews ───────────────────────────────────────────────────────────────────

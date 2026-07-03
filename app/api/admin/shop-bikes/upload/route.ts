@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-check'
-import { supabase } from '@/lib/supabase'
+import { writeFile, mkdir } from 'fs/promises'
+import { join } from 'path'
 
 export async function POST(request: Request) {
   try {
@@ -13,23 +14,13 @@ export async function POST(request: Request) {
     const allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif']
     if (!allowed.includes(ext)) return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
 
-    const filename = `bikes/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+    const dir = join(process.cwd(), 'public', 'uploads', 'bikes')
+    await mkdir(dir, { recursive: true })
     const bytes = await file.arrayBuffer()
+    await writeFile(join(dir, filename), Buffer.from(bytes))
 
-    const { error } = await supabase.storage
-      .from('uploads')
-      .upload(filename, Buffer.from(bytes), {
-        contentType: file.type || 'image/jpeg',
-        upsert: false,
-      })
-
-    if (error) throw error
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('uploads')
-      .getPublicUrl(filename)
-
-    return NextResponse.json({ url: publicUrl })
+    return NextResponse.json({ url: `/uploads/bikes/${filename}` })
   } catch (err) {
     if ((err as Error).message === 'Unauthorized') return unauthorizedResponse()
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
