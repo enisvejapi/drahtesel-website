@@ -29,6 +29,22 @@ export async function POST(req: Request) {
     reports.unshift(report)
     await writeReports(reports)
 
+    // Notify WhatsApp bot
+    const botUrl = process.env.WHATSAPP_BOT_URL
+    if (botUrl) {
+      const locationText = lat && lng
+        ? `📍 Standort: https://maps.google.com/?q=${lat},${lng}`
+        : '📍 Kein Standort angegeben'
+      const noteText = report.note ? `\n💬 Hinweis: ${report.note}` : ''
+      const message = `🚨 *Pannenhilfe angefordert!*\n\n🚲 Fahrrad-Nr: *${report.bikeNumber}*\n${locationText}${noteText}`
+
+      fetch(`${botUrl}/notify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, reportId: report.id }),
+      }).catch(() => {}) // fire and forget
+    }
+
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
