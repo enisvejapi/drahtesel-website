@@ -13,8 +13,15 @@ import { readReviews, readFaqs, readHeroImages, readOpeningHours } from '@/lib/d
 export default async function HomePage() {
   const [reviews, faqs, heroImages, openingHours] = await Promise.all([readReviews(), readFaqs(), readHeroImages(), readOpeningHours()])
 
+  const firstImage = heroImages[0] ?? { desktop: '/hero/hero-1.jpg', mobile: '/hero/hero-1-mobile.jpg' }
+
   return (
     <>
+      {/* Preload first hero image — browser fetches it before JS runs */}
+      <link rel="preload" as="image" href={firstImage.desktop} media="(min-width: 768px)" fetchPriority="high" />
+      {firstImage.mobile && (
+        <link rel="preload" as="image" href={firstImage.mobile} media="(max-width: 767px)" fetchPriority="high" />
+      )}
       <Hero images={heroImages} openingHours={openingHours} />
       <FeatureShowcase />
       <Categories />

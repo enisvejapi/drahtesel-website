@@ -38,7 +38,7 @@ export default function Hero({ images, openingHours }: { images?: HeroImage[]; o
   const [mouse,        setMouse]        = useState({ x: 0, y: 0 })
   const [scrollY,      setScrollY]      = useState(0)
   const [isDesktop,    setIsDesktop]    = useState(false)
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]))
 
   const ALL_IMAGES = useMemo(
     () => (images && images.length > 0) ? images : FALLBACK_IMAGES,
