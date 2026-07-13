@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Eye, EyeOff, Lock } from 'lucide-react'
 
@@ -10,8 +9,6 @@ export default function AdminLoginPage() {
   const [showPw, setShowPw] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const router = useRouter()
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
@@ -25,8 +22,7 @@ export default function AdminLoginPage() {
       })
 
       if (res.ok) {
-        router.push('/admin')
-        router.refresh()
+        window.location.href = '/admin'
       } else {
         const data = await res.json()
         setError(data.error || 'Invalid password')
@@ -100,9 +96,6 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-600 mt-4">
-          Default password is set in <code className="text-gray-500">.env.local</code>
-        </p>
       </div>
     </div>
   )

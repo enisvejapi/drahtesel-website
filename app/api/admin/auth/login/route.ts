@@ -21,9 +21,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Password required' }, { status: 400 })
     }
 
-    // Rate limiting simulation — always delay slightly to deter brute force
-    await new Promise((r) => setTimeout(r, 300))
-
     const settings = await readSettings()
     let valid = false
 
