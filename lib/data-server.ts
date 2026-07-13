@@ -159,3 +159,12 @@ export async function readInterestPins(): Promise<InterestPin[]> {
   return pins
 }
 export async function writeInterestPins(p: InterestPin[]): Promise<void> { return writeKV('interest_pins', p) }
+
+// ── Shop Status ───────────────────────────────────────────────────────────────
+export async function readShopStatus(): Promise<boolean> {
+  const s = await readKV<{ active: boolean }>('shop_status', { active: true })
+  return s.active
+}
+export async function writeShopStatus(active: boolean): Promise<void> {
+  return writeKV('shop_status', { active })
+}

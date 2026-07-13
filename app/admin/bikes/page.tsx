@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Plus, Save, X, Trash2, ChevronDown, ChevronUp, Upload, Bike } from 'lucide-react'
+import { Plus, Save, X, Trash2, ChevronDown, ChevronUp, Upload, Bike, PowerIcon } from 'lucide-react'
 import type { ShopBike, ShopBikeStat, ShopBikeSpec, ShopBikeBenefit, ShopBikeFaq } from '@/lib/data-server'
 
 // ─── empty templates ───────────────────────────────────────────────────────────
@@ -335,10 +335,24 @@ export default function AdminBikesPage() {
   const [editing, setEditing] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [shopActive, setShopActive] = useState(true)
+  const [toggling, setToggling] = useState(false)
 
   useEffect(() => {
     fetch('/api/admin/shop-bikes').then(r => r.json()).then(setBikes)
+    fetch('/api/admin/shop-status').then(r => r.json()).then(d => setShopActive(d.active))
   }, [])
+
+  async function toggleShop() {
+    setToggling(true)
+    const res = await fetch('/api/admin/shop-status', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: !shopActive }),
+    })
+    if (res.ok) setShopActive(v => !v)
+    setToggling(false)
+  }
 
   async function handleAdd(data: Omit<ShopBike, 'id'>) {
     setSaving(true)
@@ -371,6 +385,28 @@ export default function AdminBikesPage() {
 
   return (
     <div>
+      {/* Shop Status Toggle */}
+      <div className={`flex items-center justify-between p-4 rounded-2xl border mb-6 transition-colors ${shopActive ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+        <div className="flex items-center gap-3">
+          <div className={`w-2.5 h-2.5 rounded-full ${shopActive ? 'bg-green-500' : 'bg-red-400'} ${shopActive ? 'animate-pulse' : ''}`} />
+          <div>
+            <p className={`font-bold text-sm ${shopActive ? 'text-green-800' : 'text-red-800'}`}>
+              Shop {shopActive ? 'aktiv' : 'deaktiviert'}
+            </p>
+            <p className={`text-xs ${shopActive ? 'text-green-600' : 'text-red-500'}`}>
+              {shopActive ? '/pricing ist sichtbar und zugänglich' : '/pricing zeigt „Coming Soon" Overlay'}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={toggleShop}
+          disabled={toggling}
+          className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none disabled:opacity-60 ${shopActive ? 'bg-green-500' : 'bg-gray-300'}`}
+        >
+          <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition-transform duration-200 ${shopActive ? 'translate-x-6' : 'translate-x-1'}`} />
+        </button>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
