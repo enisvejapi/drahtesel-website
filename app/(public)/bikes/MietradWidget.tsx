@@ -79,13 +79,8 @@ bike-rental-service {
 }
 `
 
-function resetBar(bar: HTMLElement) {
-  bar.style.removeProperty('top')
-  bar.style.removeProperty('position')
-  bar.style.removeProperty('bottom')
-  bar.style.removeProperty('transform')
-  bar.style.removeProperty('left')
-  bar.style.removeProperty('right')
+function hideBar(bar: HTMLElement) {
+  bar.style.setProperty('display', 'none', 'important')
 }
 
 export default function MietradWidget() {
@@ -93,7 +88,7 @@ export default function MietradWidget() {
     let observer: MutationObserver | null = null
 
     function applyToAllBars() {
-      document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(resetBar)
+      document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(hideBar)
     }
 
     observer = new MutationObserver((mutations) => {
@@ -103,13 +98,13 @@ export default function MietradWidget() {
           m.attributeName === 'style' &&
           (m.target as HTMLElement).classList?.contains('sticky-header-bottom-space')
         ) {
-          resetBar(m.target as HTMLElement)
+          hideBar(m.target as HTMLElement)
         }
         if (m.type === 'childList') {
           m.addedNodes.forEach((node) => {
             if (node instanceof HTMLElement) {
-              if (node.classList.contains('sticky-header-bottom-space')) resetBar(node)
-              node.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(resetBar)
+              if (node.classList.contains('sticky-header-bottom-space')) hideBar(node)
+              node.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(hideBar)
             }
           })
         }
