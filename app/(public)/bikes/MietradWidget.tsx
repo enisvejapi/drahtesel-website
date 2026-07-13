@@ -9,16 +9,6 @@ bike-rental-service * {
   font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif !important;
 }
 
-/* Shrink the cart bar title and subtitle */
-bike-rental-service .sticky-header-bottom-space .text-xl {
-  font-size: 0.875rem !important;
-  font-weight: 600 !important;
-}
-bike-rental-service .sticky-header-bottom-space .margin-top {
-  font-size: 0.75rem !important;
-  margin-top: 2px !important;
-}
-
 /* Unfix the top sticky bar */
 bike-rental-service .sticky-top {
   position: static !important;
@@ -79,48 +69,37 @@ bike-rental-service {
 }
 `
 
-function hideBar(bar: HTMLElement) {
-  bar.style.setProperty('display', 'none', 'important')
-}
-
 export default function MietradWidget() {
   useEffect(() => {
-    let observer: MutationObserver | null = null
+    // Inject a style tag dynamically so it's added AFTER Mietrad's own CSS and always wins
+    const styleEl = document.createElement('style')
+    styleEl.textContent = '.sticky-header-bottom-space { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }'
+    document.head.appendChild(styleEl)
 
-    function applyToAllBars() {
-      document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(hideBar)
+    // Also force-hide via inline style on any existing or future elements
+    function hideAll() {
+      document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach((el) => {
+        el.style.setProperty('display', 'none', 'important')
+      })
     }
 
-    observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (
-          m.type === 'attributes' &&
-          m.attributeName === 'style' &&
-          (m.target as HTMLElement).classList?.contains('sticky-header-bottom-space')
-        ) {
-          hideBar(m.target as HTMLElement)
-        }
-        if (m.type === 'childList') {
-          m.addedNodes.forEach((node) => {
-            if (node instanceof HTMLElement) {
-              if (node.classList.contains('sticky-header-bottom-space')) hideBar(node)
-              node.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach(hideBar)
-            }
-          })
-        }
-      }
-    })
+    const observer = new MutationObserver(hideAll)
+    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] })
 
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style'],
-    })
+    // Polling as final fallback — runs every 300ms for first 10s then stops
+    let ticks = 0
+    const interval = setInterval(() => {
+      hideAll()
+      if (++ticks > 33) clearInterval(interval)
+    }, 300)
 
-    applyToAllBars()
+    hideAll()
 
-    return () => observer?.disconnect()
+    return () => {
+      observer.disconnect()
+      clearInterval(interval)
+      styleEl.remove()
+    }
   }, [])
 
   return (
