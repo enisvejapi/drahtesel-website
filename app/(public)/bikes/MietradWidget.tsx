@@ -76,10 +76,26 @@ export default function MietradWidget() {
     styleEl.textContent = '.sticky-header-bottom-space { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }'
     document.head.appendChild(styleEl)
 
-    // Also force-hide via inline style on any existing or future elements
     function hideAll() {
+      // Regular DOM
       document.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach((el) => {
         el.style.setProperty('display', 'none', 'important')
+      })
+      // Shadow DOM (open shadow roots only)
+      document.querySelectorAll('bike-rental-service').forEach((host) => {
+        const root = (host as Element & { shadowRoot: ShadowRoot | null }).shadowRoot
+        if (root) {
+          root.querySelectorAll<HTMLElement>('.sticky-header-bottom-space').forEach((el) => {
+            el.style.setProperty('display', 'none', 'important')
+          })
+          // Inject a style into the shadow root so it persists
+          if (!root.querySelector('#drahtesel-hide-bar')) {
+            const s = document.createElement('style')
+            s.id = 'drahtesel-hide-bar'
+            s.textContent = '.sticky-header-bottom-space { display: none !important; visibility: hidden !important; }'
+            root.appendChild(s)
+          }
+        }
       })
     }
 
