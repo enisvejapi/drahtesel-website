@@ -25,16 +25,24 @@ bike-rental-service .sticky-top {
   top: auto !important;
 }
 
-/* Fix the cart bar 20% up from the bottom of the viewport */
+/* Fix the cart bar to the very bottom of the viewport */
 .sticky-header-bottom-space,
 bike-rental-service .sticky-header-bottom-space {
   position: fixed !important;
-  bottom: 20% !important;
+  bottom: 0 !important;
   top: auto !important;
   transform: none !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 50 !important;
+}
+
+/* On mobile, lift above the bottom nav bar (~64px) */
+@media (max-width: 768px) {
+  .sticky-header-bottom-space,
+  bike-rental-service .sticky-header-bottom-space {
+    bottom: 64px !important;
+  }
 }
 
 bike-rental-service {
