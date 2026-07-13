@@ -14,7 +14,7 @@ export default async function PricingPage() {
 
       {/* Coming Soon overlay — only when shop is inactive */}
       {!shopActive && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md px-6">
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 px-6">
           <div className="flex flex-col items-center text-center max-w-sm">
             {/* Logo */}
             <div className="w-20 h-20 relative mb-6">
