@@ -282,17 +282,17 @@ export default function Hero({ images, openingHours }: { images?: HeroImage[]; o
 
       {/* ── Mobile CTAs + opening hours + dots — pinned to bottom ───── */}
       <div className="md:hidden mt-auto relative z-10 flex flex-col items-center gap-2 px-4 pb-4">
-        <div className="flex flex-row gap-3 justify-center w-full">
+        <div className="flex flex-row gap-2 justify-center w-full">
           <Link
             href="/bikes"
-            className="inline-flex items-center gap-2 bg-brand-red text-white font-bold rounded-xl px-5 py-2.5 text-sm transition-all duration-200 shadow-xl shadow-brand-red/30"
+            className="inline-flex items-center gap-1.5 bg-brand-red text-white font-semibold rounded-lg px-3 py-2 text-xs transition-all duration-200 shadow-lg shadow-brand-red/30"
           >
             {t('hero.browseBikes')}
-            <ArrowRight size={15} />
+            <ArrowRight size={13} />
           </Link>
           <Link
             href="/how-it-works"
-            className="inline-flex items-center gap-2 bg-white/10 border border-white/30 backdrop-blur-sm text-white font-bold rounded-xl px-5 py-2.5 text-sm transition-all duration-200"
+            className="inline-flex items-center gap-1.5 bg-white/10 border border-white/30 backdrop-blur-sm text-white font-semibold rounded-lg px-3 py-2 text-xs transition-all duration-200"
           >
             {t('hero.howItWorks')}
           </Link>
