@@ -8,7 +8,7 @@ export default async function PricingPage() {
   return (
     <div className="relative">
       {/* Page content — always rendered */}
-      <div className={shopActive ? '' : 'blur-[3px] pointer-events-none select-none'}>
+      <div className={shopActive ? '' : 'blur-[2px] pointer-events-none select-none'}>
         <PricingClient initialBikes={bikes} />
       </div>
 
