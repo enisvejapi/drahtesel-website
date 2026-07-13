@@ -324,15 +324,7 @@ export default function PricingClient({ initialBikes }: { initialBikes: ShopBike
           ══════════════════════════════════════════════════════ */}
           <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
             <div aria-hidden className="pointer-events-none absolute inset-0">
-              {/* Desktop hero image — always rendered as base (fallback for mobile too) */}
-              <Image
-                key={bike.heroImage}
-                src={bike.heroImage}
-                alt="" fill priority
-                className="object-cover object-center opacity-80"
-                sizes="100vw"
-              />
-              {/* Mobile hero image — overlays on top on mobile when available */}
+              {/* Mobile hero image */}
               {bike.heroImageMobile && (
                 <Image
                   key={`${bike.heroImage}-mobile`}
@@ -342,6 +334,14 @@ export default function PricingClient({ initialBikes }: { initialBikes: ShopBike
                   sizes="100vw"
                 />
               )}
+              {/* Desktop hero image — fallback for mobile when no mobile image set */}
+              <Image
+                key={bike.heroImage}
+                src={bike.heroImage}
+                alt="" fill priority
+                className={bike.heroImageMobile ? 'hidden md:block object-cover object-center opacity-80' : 'object-cover object-center opacity-80'}
+                sizes="100vw"
+              />
               <div className="absolute inset-0 bg-[#080808]/20" />
               <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/10 via-transparent to-[#080808]/65" />
             </div>
